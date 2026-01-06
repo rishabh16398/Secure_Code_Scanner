@@ -617,6 +617,56 @@ def generate_detailed_count_excel(all_runs_data, out_path: Path):
     wb.save(out_path)
 
 
+def clean_file_paths(results, tmp_dir, project_name):
+    """
+    Remove temp directory prefix from all file paths in results.
+    
+    Before: /var/folders/.../T/scanproj_xyz123/python-flask-gemini/app.py
+    After:  python-flask-gemini/app.py
+    """
+    import re
+    from pathlib import Path
+    
+    # Convert tmp_dir to string for matching
+    tmp_dir_str = str(tmp_dir)
+    
+    def clean_path(file_path):
+        if not file_path:
+            return file_path
+        
+        # Convert to string
+        path_str = str(file_path)
+        
+        # Remove the temp directory prefix
+        # Pattern: /path/to/temp/scanproj_xxx/
+        if tmp_dir_str in path_str:
+            # Remove everything up to and including the temp directory
+            path_str = path_str.replace(tmp_dir_str + "/", "")
+            path_str = path_str.replace(tmp_dir_str, "")
+        
+        # Also handle if scanners return relative paths
+        # Just make sure we keep the project structure
+        return path_str
+    
+    # Clean SAST results
+    if "sast" in results:
+        for scanner_name, findings in results["sast"].items():
+            for finding in findings:
+                if "file" in finding:
+                    finding["file"] = clean_path(finding["file"])
+    
+    # Clean dependency results
+    if "dep" in results:
+        for scanner_name, findings in results["dep"].items():
+            for finding in findings:
+                if "file" in finding:
+                    finding["file"] = clean_path(finding["file"])
+                if "path" in finding:
+                    finding["path"] = clean_path(finding["path"])
+    
+    return results
+
+
 def scan_projects_background(files_info, clear_previous, scan_id):
     """Background task to scan projects and send progress updates"""
     global ALL_RUNS
@@ -684,6 +734,10 @@ def scan_projects_background(files_info, clear_previous, scan_id):
                     })
                 
                 results = run_all_scanners(tmp_dir, progress_callback=scanner_progress)
+                
+                # Clean file paths - remove temp directory prefix
+                project_name = filename.rsplit(".", 1)[0]
+                results = clean_file_paths(results, tmp_dir, project_name)
                 
                 # Build summaries
                 queue.put({
@@ -1211,6 +1265,251 @@ def get_cwe_name(cwe: str) -> str:
         "CWE-410": "Insufficient Resource Pool",
     }
     return cwe_names.get(cwe, f"Unknown Vulnerability ({cwe})")
+
+
+@app.route("/download_consolidated_json")
+def download_consolidated_json():
+    """Download all runs data in a single consolidated JSON file"""
+    if not ALL_RUNS:
+        flash("No runs available to download", "warning")
+        return redirect(url_for("index"))
+    
+    # Create consolidated data structure
+    consolidated_data = {
+        "total_runs": len(ALL_RUNS),
+        "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "runs": []
+    }
+    
+    for idx, run_data in enumerate(ALL_RUNS):
+        # Extract project name without file extension and run numbers
+        project_name = run_data.get("project_name", f"unknown_project")
+        
+        # Remove .zip extension if present
+        if project_name.endswith('.zip'):
+            project_name = project_name[:-4]
+        
+        # Remove run numbers like "-run1", "-run2", "_run1", "_run2" at the end
+        import re
+        project_name = re.sub(r'[-_]run\d+$', '', project_name, flags=re.IGNORECASE)
+        
+        run_info = {
+            "run_number": idx + 1,
+            "scan_timestamp": run_data.get("timestamp", "N/A"),
+            "results": run_data.get("results", {})  # Only raw tool results
+        }
+        consolidated_data["runs"].append(run_info)
+    
+    # Extract unique project name (assume all runs are from same project)
+    # Use the first run's project name
+    if consolidated_data["runs"]:
+        first_run = ALL_RUNS[0]
+        project_name = first_run.get("project_name", "unknown_project")
+        if project_name.endswith('.zip'):
+            project_name = project_name[:-4]
+        import re
+        project_name = re.sub(r'[-_]run\d+$', '', project_name, flags=re.IGNORECASE)
+        consolidated_data["project"] = project_name
+    else:
+        consolidated_data["project"] = "unknown_project"
+    
+    # Save to file
+    filename = f"consolidated_all_runs_{len(ALL_RUNS)}_runs.json"
+    filepath = REPORT_DIR / filename
+    
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(consolidated_data, f, indent=2, ensure_ascii=False)
+    
+    return send_from_directory(REPORT_DIR, filename, as_attachment=True)
+
+
+@app.route("/download_cwe_analysis_json")
+def download_cwe_analysis_json():
+    """
+    Download detailed CWE analysis JSON with:
+    - CWE info
+    - What runs they were found in
+    - What tools detected them
+    - How many unique files per run and total
+    - CWE descriptions from tools
+    """
+    if not ALL_RUNS:
+        flash("No runs available to download", "warning")
+        return redirect(url_for("index"))
+    
+    # Collect comprehensive CWE data
+    cwe_analysis = {
+        "total_runs": len(ALL_RUNS),
+        "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "cwes": {}
+    }
+    
+    # Process each run to collect CWE information
+    for run_idx, run_data in enumerate(ALL_RUNS):
+        sast_summary = run_data.get("sast_summary", [])
+        results = run_data.get("results", {})
+        sast_results = results.get("sast", {})
+        
+        # First pass: Count files from RAW scanner results (same as Excel!)
+        cwe_files_this_run = {}  # cwe -> set of files for THIS run
+        
+        for scanner_name, findings in sast_results.items():
+            for finding in findings:
+                cwe = finding.get("cwe")
+                if cwe and cwe != "CWE-UNKNOWN":
+                    if cwe not in cwe_files_this_run:
+                        cwe_files_this_run[cwe] = set()
+                    
+                    file_path = finding.get("file")
+                    if file_path:
+                        cwe_files_this_run[cwe].add(file_path)
+        
+        # Second pass: Build CWE analysis using summary for other data
+        for item in sast_summary:
+            cwe = item.get("cwe")
+            if not cwe or cwe == "CWE-UNKNOWN":
+                continue
+            
+            # Initialize CWE entry if not exists
+            if cwe not in cwe_analysis["cwes"]:
+                cwe_analysis["cwes"][cwe] = {
+                    "cwe_id": cwe,
+                    "cwe_name": get_cwe_name(cwe),
+                    "found_in_runs": [],
+                    "total_runs_found": 0,
+                    "tools_detected_by": set(),
+                    "severity_levels": set(),
+                    "file_counts_per_run": {},
+                    "files_per_run": {},  # Track actual file sets per run
+                    "total_unique_files": 0,
+                    "descriptions": [],
+                    "examples": []
+                }
+            
+            cwe_entry = cwe_analysis["cwes"][cwe]
+            run_number = run_idx + 1
+            
+            # Add run information
+            if run_number not in cwe_entry["found_in_runs"]:
+                cwe_entry["found_in_runs"].append(run_number)
+            
+            # Add tools
+            scanners = item.get("scanners", [])
+            for scanner in scanners:
+                cwe_entry["tools_detected_by"].add(scanner)
+            
+            # Add severity
+            severity = item.get("severity", "UNKNOWN")
+            cwe_entry["severity_levels"].add(severity)
+            
+            # Use the file count from RAW scanner results (same as Excel!)
+            files_in_this_run = cwe_files_this_run.get(cwe, set())
+            cwe_entry["files_per_run"][run_number] = files_in_this_run
+            cwe_entry["file_counts_per_run"][f"run_{run_number}"] = len(files_in_this_run)
+            
+            # Store example instances (limited to 3 for display only)
+            examples = item.get("examples", [])
+            for ex in examples[:3]:  # Limit to 3 examples per run for display
+                example_info = {
+                    "run": run_number,
+                    "file": ex.get("file", ""),
+                    "line": ex.get("line", ""),
+                    "scanner": ex.get("scanner", ""),
+                    "message": ex.get("message", "")
+                }
+                cwe_entry["examples"].append(example_info)
+        
+        # Also collect descriptions from raw scanner results
+        sast_results = results.get("sast", {})
+        
+        # Semgrep descriptions
+        semgrep_findings = sast_results.get("semgrep", [])
+        for finding in semgrep_findings:
+            cwe = finding.get("cwe")
+            if cwe and cwe in cwe_analysis["cwes"]:
+                message = finding.get("message", "")
+                if message and message not in cwe_analysis["cwes"][cwe]["descriptions"]:
+                    cwe_analysis["cwes"][cwe]["descriptions"].append({
+                        "tool": "Semgrep",
+                        "description": message
+                    })
+        
+        # Bearer descriptions
+        bearer_findings = sast_results.get("bearer", [])
+        for finding in bearer_findings:
+            cwe = finding.get("cwe")
+            if cwe and cwe in cwe_analysis["cwes"]:
+                message = finding.get("message", "")
+                if message and message not in cwe_analysis["cwes"][cwe]["descriptions"]:
+                    cwe_analysis["cwes"][cwe]["descriptions"].append({
+                        "tool": "Bearer",
+                        "description": message
+                    })
+        
+        # Bandit descriptions
+        bandit_findings = sast_results.get("bandit", [])
+        for finding in bandit_findings:
+            cwe = finding.get("cwe")
+            if cwe and cwe in cwe_analysis["cwes"]:
+                message = finding.get("message", "")
+                if message and message not in cwe_analysis["cwes"][cwe]["descriptions"]:
+                    cwe_analysis["cwes"][cwe]["descriptions"].append({
+                        "tool": "Bandit",
+                        "description": message
+                    })
+    
+    # Post-process: convert sets to lists and calculate totals
+    for cwe, data in cwe_analysis["cwes"].items():
+        data["tools_detected_by"] = sorted(list(data["tools_detected_by"]))
+        data["severity_levels"] = sorted(list(data["severity_levels"]))
+        data["total_runs_found"] = len(data["found_in_runs"])
+        data["found_in_runs"] = sorted(data["found_in_runs"])
+        
+        # Calculate total unique files across ALL runs
+        all_files = set()
+        for run_num, file_set in data["files_per_run"].items():
+            all_files.update(file_set)
+        data["total_unique_files"] = len(all_files)
+        
+        # Remove the temporary files_per_run tracking (not needed in output)
+        del data["files_per_run"]
+        
+        # Deduplicate descriptions
+        seen_descriptions = set()
+        unique_descriptions = []
+        for desc in data["descriptions"]:
+            desc_text = desc["description"]
+            if desc_text not in seen_descriptions:
+                seen_descriptions.add(desc_text)
+                unique_descriptions.append(desc)
+        data["descriptions"] = unique_descriptions[:5]  # Limit to 5 unique descriptions
+        
+        # Calculate statistics
+        file_counts = list(data["file_counts_per_run"].values())
+        data["statistics"] = {
+            "average_files_per_run": round(sum(file_counts) / len(file_counts), 2) if file_counts else 0,
+            "max_files_in_single_run": max(file_counts) if file_counts else 0,
+            "min_files_in_single_run": min(file_counts) if file_counts else 0,
+            "total_instances_across_runs": sum(file_counts)
+        }
+    
+    # Sort CWEs by total runs found (most common first)
+    sorted_cwes = dict(sorted(
+        cwe_analysis["cwes"].items(),
+        key=lambda x: (x[1]["total_runs_found"], x[1]["total_unique_files"]),
+        reverse=True
+    ))
+    cwe_analysis["cwes"] = sorted_cwes
+    cwe_analysis["total_unique_cwes"] = len(sorted_cwes)
+    
+    # Save to file
+    filename = f"cwe_analysis_{len(ALL_RUNS)}_runs.json"
+    filepath = REPORT_DIR / filename
+    
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(cwe_analysis, f, indent=2, ensure_ascii=False)
+    
+    return send_from_directory(REPORT_DIR, filename, as_attachment=True)
 
 
 @app.route("/clear_runs")

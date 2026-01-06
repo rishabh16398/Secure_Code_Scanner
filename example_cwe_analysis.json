@@ -1,0 +1,419 @@
+{
+  "total_runs": 10,
+  "generated_at": "2026-01-06 10:30:00",
+  "total_unique_cwes": 15,
+  "cwes": {
+    "CWE-79": {
+      "cwe_id": "CWE-79",
+      "cwe_name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+      "found_in_runs": [1, 2, 3, 5, 7, 8, 9, 10],
+      "total_runs_found": 8,
+      "tools_detected_by": ["Bearer", "Semgrep"],
+      "severity_levels": ["HIGH", "MEDIUM"],
+      "file_counts_per_run": {
+        "run_1": 20,
+        "run_2": 15,
+        "run_3": 18,
+        "run_5": 8,
+        "run_7": 12,
+        "run_8": 18,
+        "run_9": 22,
+        "run_10": 16
+      },
+      "total_unique_files": 45,
+      "statistics": {
+        "average_files_per_run": 16.13,
+        "max_files_in_single_run": 22,
+        "min_files_in_single_run": 8,
+        "total_instances_across_runs": 129
+      },
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "User input flows into HTML without escaping, enabling XSS attacks"
+        },
+        {
+          "tool": "Bearer",
+          "description": "Potential XSS vulnerability detected in template rendering"
+        },
+        {
+          "tool": "Semgrep",
+          "description": "Detected template rendering with unescaped user input"
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "app/views/user_profile.py",
+          "line": "45",
+          "scanner": "Semgrep",
+          "message": "User input flows into HTML without escaping"
+        },
+        {
+          "run": 1,
+          "file": "app/templates/search.html",
+          "line": "12",
+          "scanner": "Bearer",
+          "message": "Unescaped user input in template"
+        },
+        {
+          "run": 1,
+          "file": "app/views/comments.py",
+          "line": "89",
+          "scanner": "Semgrep",
+          "message": "XSS vulnerability in comment rendering"
+        },
+        {
+          "run": 2,
+          "file": "app/handlers/post.py",
+          "line": "34",
+          "scanner": "Bearer",
+          "message": "User content rendered without sanitization"
+        },
+        {
+          "run": 2,
+          "file": "app/views/dashboard.py",
+          "line": "67",
+          "scanner": "Semgrep",
+          "message": "Template injection vulnerability"
+        }
+      ]
+    },
+    "CWE-89": {
+      "cwe_id": "CWE-89",
+      "cwe_name": "Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')",
+      "found_in_runs": [1, 2, 3, 4, 6, 7, 9],
+      "total_runs_found": 7,
+      "tools_detected_by": ["Bandit", "Semgrep"],
+      "severity_levels": ["CRITICAL", "HIGH"],
+      "file_counts_per_run": {
+        "run_1": 12,
+        "run_2": 8,
+        "run_3": 10,
+        "run_4": 15,
+        "run_6": 9,
+        "run_7": 11,
+        "run_9": 13
+      },
+      "total_unique_files": 32,
+      "statistics": {
+        "average_files_per_run": 11.14,
+        "max_files_in_single_run": 15,
+        "min_files_in_single_run": 8,
+        "total_instances_across_runs": 78
+      },
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "SQL query uses string formatting with user input"
+        },
+        {
+          "tool": "Bandit",
+          "description": "Possible SQL injection vector through string concatenation"
+        },
+        {
+          "tool": "Semgrep",
+          "description": "Direct string interpolation in SQL query detected"
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "app/database/queries.py",
+          "line": "23",
+          "scanner": "Semgrep",
+          "message": "SQL query uses string formatting"
+        },
+        {
+          "run": 1,
+          "file": "app/models/user.py",
+          "line": "56",
+          "scanner": "Bandit",
+          "message": "String concatenation in SQL query"
+        },
+        {
+          "run": 2,
+          "file": "app/database/search.py",
+          "line": "41",
+          "scanner": "Semgrep",
+          "message": "User input directly in SQL query"
+        }
+      ]
+    },
+    "CWE-22": {
+      "cwe_id": "CWE-22",
+      "cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+      "found_in_runs": [1, 3, 4, 5, 8, 10],
+      "total_runs_found": 6,
+      "tools_detected_by": ["Bandit", "Semgrep"],
+      "severity_levels": ["HIGH", "MEDIUM"],
+      "file_counts_per_run": {
+        "run_1": 5,
+        "run_3": 7,
+        "run_4": 6,
+        "run_5": 4,
+        "run_8": 8,
+        "run_10": 5
+      },
+      "total_unique_files": 18,
+      "statistics": {
+        "average_files_per_run": 5.83,
+        "max_files_in_single_run": 8,
+        "min_files_in_single_run": 4,
+        "total_instances_across_runs": 35
+      },
+      "descriptions": [
+        {
+          "tool": "Bandit",
+          "description": "User-controlled file path without validation"
+        },
+        {
+          "tool": "Semgrep",
+          "description": "Potential path traversal in file operations"
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "app/handlers/file_download.py",
+          "line": "19",
+          "scanner": "Bandit",
+          "message": "User input used in file path"
+        },
+        {
+          "run": 3,
+          "file": "app/utils/storage.py",
+          "line": "45",
+          "scanner": "Semgrep",
+          "message": "File path constructed from user input"
+        }
+      ]
+    },
+    "CWE-78": {
+      "cwe_id": "CWE-78",
+      "cwe_name": "Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')",
+      "found_in_runs": [2, 4, 6, 7, 9],
+      "total_runs_found": 5,
+      "tools_detected_by": ["Bandit", "Semgrep"],
+      "severity_levels": ["CRITICAL", "HIGH"],
+      "file_counts_per_run": {
+        "run_2": 3,
+        "run_4": 5,
+        "run_6": 4,
+        "run_7": 2,
+        "run_9": 6
+      },
+      "total_unique_files": 12,
+      "statistics": {
+        "average_files_per_run": 4.0,
+        "max_files_in_single_run": 6,
+        "min_files_in_single_run": 2,
+        "total_instances_across_runs": 20
+      },
+      "descriptions": [
+        {
+          "tool": "Bandit",
+          "description": "Shell command execution with user-controlled input"
+        },
+        {
+          "tool": "Semgrep",
+          "description": "Subprocess call with shell=True and user input"
+        }
+      ],
+      "examples": [
+        {
+          "run": 2,
+          "file": "app/utils/system.py",
+          "line": "78",
+          "scanner": "Bandit",
+          "message": "Shell=True with user input"
+        },
+        {
+          "run": 4,
+          "file": "app/handlers/execute.py",
+          "line": "34",
+          "scanner": "Semgrep",
+          "message": "Command injection vulnerability"
+        }
+      ]
+    },
+    "CWE-798": {
+      "cwe_id": "CWE-798",
+      "cwe_name": "Use of Hard-coded Credentials",
+      "found_in_runs": [1, 2, 3, 5, 6, 8, 9, 10],
+      "total_runs_found": 8,
+      "tools_detected_by": ["Bandit", "Bearer", "Semgrep"],
+      "severity_levels": ["HIGH", "MEDIUM"],
+      "file_counts_per_run": {
+        "run_1": 4,
+        "run_2": 3,
+        "run_3": 5,
+        "run_5": 2,
+        "run_6": 4,
+        "run_8": 3,
+        "run_9": 6,
+        "run_10": 4
+      },
+      "total_unique_files": 15,
+      "statistics": {
+        "average_files_per_run": 3.88,
+        "max_files_in_single_run": 6,
+        "min_files_in_single_run": 2,
+        "total_instances_across_runs": 31
+      },
+      "descriptions": [
+        {
+          "tool": "Bandit",
+          "description": "Hard-coded password string detected"
+        },
+        {
+          "tool": "Bearer",
+          "description": "Credentials stored in source code"
+        },
+        {
+          "tool": "Semgrep",
+          "description": "Hard-coded API key or password"
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "app/config/database.py",
+          "line": "12",
+          "scanner": "Bandit",
+          "message": "Hard-coded password"
+        },
+        {
+          "run": 2,
+          "file": "app/utils/api_client.py",
+          "line": "8",
+          "scanner": "Bearer",
+          "message": "Hard-coded API key"
+        }
+      ]
+    },
+    "CWE-327": {
+      "cwe_id": "CWE-327",
+      "cwe_name": "Use of a Broken or Risky Cryptographic Algorithm",
+      "found_in_runs": [1, 3, 5, 7, 9],
+      "total_runs_found": 5,
+      "tools_detected_by": ["Bandit", "Semgrep"],
+      "severity_levels": ["HIGH", "MEDIUM"],
+      "file_counts_per_run": {
+        "run_1": 3,
+        "run_3": 2,
+        "run_5": 4,
+        "run_7": 2,
+        "run_9": 3
+      },
+      "total_unique_files": 8,
+      "statistics": {
+        "average_files_per_run": 2.8,
+        "max_files_in_single_run": 4,
+        "min_files_in_single_run": 2,
+        "total_instances_across_runs": 14
+      },
+      "descriptions": [
+        {
+          "tool": "Bandit",
+          "description": "Use of weak cryptographic algorithm (MD5/SHA1)"
+        },
+        {
+          "tool": "Semgrep",
+          "description": "Insecure hash function used for security purposes"
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "app/utils/crypto.py",
+          "line": "25",
+          "scanner": "Bandit",
+          "message": "Use of MD5 hash"
+        }
+      ]
+    },
+    "CWE-502": {
+      "cwe_id": "CWE-502",
+      "cwe_name": "Deserialization of Untrusted Data",
+      "found_in_runs": [2, 4, 6, 8],
+      "total_runs_found": 4,
+      "tools_detected_by": ["Bandit", "Semgrep"],
+      "severity_levels": ["CRITICAL", "HIGH"],
+      "file_counts_per_run": {
+        "run_2": 2,
+        "run_4": 3,
+        "run_6": 1,
+        "run_8": 2
+      },
+      "total_unique_files": 6,
+      "statistics": {
+        "average_files_per_run": 2.0,
+        "max_files_in_single_run": 3,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 8
+      },
+      "descriptions": [
+        {
+          "tool": "Bandit",
+          "description": "Pickle used on untrusted data"
+        },
+        {
+          "tool": "Semgrep",
+          "description": "Unsafe deserialization detected"
+        }
+      ],
+      "examples": [
+        {
+          "run": 2,
+          "file": "app/handlers/session.py",
+          "line": "34",
+          "scanner": "Bandit",
+          "message": "Pickle loads from user input"
+        }
+      ]
+    },
+    "CWE-319": {
+      "cwe_id": "CWE-319",
+      "cwe_name": "Cleartext Transmission of Sensitive Information",
+      "found_in_runs": [1, 3, 5, 7, 8, 10],
+      "total_runs_found": 6,
+      "tools_detected_by": ["Bearer", "Semgrep"],
+      "severity_levels": ["HIGH", "MEDIUM"],
+      "file_counts_per_run": {
+        "run_1": 5,
+        "run_3": 4,
+        "run_5": 6,
+        "run_7": 3,
+        "run_8": 5,
+        "run_10": 4
+      },
+      "total_unique_files": 14,
+      "statistics": {
+        "average_files_per_run": 4.5,
+        "max_files_in_single_run": 6,
+        "min_files_in_single_run": 3,
+        "total_instances_across_runs": 27
+      },
+      "descriptions": [
+        {
+          "tool": "Bearer",
+          "description": "Sensitive data transmitted over HTTP"
+        },
+        {
+          "tool": "Semgrep",
+          "description": "Unencrypted transmission of credentials"
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "app/api/auth.py",
+          "line": "45",
+          "scanner": "Bearer",
+          "message": "Password sent over HTTP"
+        }
+      ]
+    }
+  }
+}

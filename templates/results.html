@@ -47,13 +47,19 @@
       <a href="{{ url_for('download_detailed_counts') }}" class="btn btn-warning btn-sm">
         📈 Download Detailed File Counts
       </a>
+      <a href="{{ url_for('download_consolidated_json') }}" class="btn btn-primary btn-sm">
+        📦 Download All Runs JSON
+      </a>
+      <a href="{{ url_for('download_cwe_analysis_json') }}" class="btn btn-info btn-sm">
+        🔍 Download CWE Analysis JSON
+      </a>
       {% endif %}
       
       <a href="{{ url_for('download_report', run_index=current_index) }}" class="btn btn-accent btn-sm">
         📄 Download DOCX Report (This Run)
       </a>
       
-      <a href="{{ url_for('download_json', run_index=current_index) }}" class="btn btn-info btn-sm">
+      <a href="{{ url_for('download_json', run_index=current_index) }}" class="btn btn-secondary btn-sm">
         📋 Download JSON (This Run)
       </a>
     </div>

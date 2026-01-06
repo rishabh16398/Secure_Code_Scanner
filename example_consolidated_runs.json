@@ -1,0 +1,457 @@
+{
+  "total_runs": 3,
+  "generated_at": "2026-01-06 10:30:00",
+  "runs": [
+    {
+      "run_number": 1,
+      "project_name": "gpt_run1.zip",
+      "scan_timestamp": "2026-01-06 09:15:23",
+      "results": {
+        "sast": {
+          "semgrep": [
+            {
+              "rule_id": "python.django.security.injection.sql.sql-injection-using-string-formatting",
+              "cwe": "CWE-89",
+              "severity": "HIGH",
+              "file": "app/database/queries.py",
+              "line": "23",
+              "message": "SQL query uses string formatting with user input",
+              "metadata": {
+                "owasp": "A03:2021 - Injection"
+              }
+            },
+            {
+              "rule_id": "python.flask.security.xss.template-unquoted-attribute-var",
+              "cwe": "CWE-79",
+              "severity": "MEDIUM",
+              "file": "app/views/user_profile.py",
+              "line": "45",
+              "message": "User input flows into HTML without escaping",
+              "metadata": {
+                "owasp": "A03:2021 - Injection"
+              }
+            }
+          ],
+          "bearer": [
+            {
+              "rule_id": "bearer:python_lang_weak_encryption_md5",
+              "cwe": "CWE-327",
+              "severity": "HIGH",
+              "file": "app/utils/crypto.py",
+              "line": "25",
+              "message": "Use of weak cryptographic algorithm (MD5)",
+              "metadata": {}
+            }
+          ],
+          "bandit": [
+            {
+              "rule_id": "B201",
+              "cwe": "CWE-502",
+              "severity": "HIGH",
+              "file": "app/handlers/session.py",
+              "line": "34",
+              "message": "Pickle used on untrusted data",
+              "confidence": "HIGH"
+            },
+            {
+              "rule_id": "B105",
+              "cwe": "CWE-798",
+              "severity": "MEDIUM",
+              "file": "app/config/database.py",
+              "line": "12",
+              "message": "Hard-coded password string",
+              "confidence": "MEDIUM"
+            }
+          ]
+        },
+        "dep": {
+          "trivy": [
+            {
+              "cve": "CVE-2023-12345",
+              "package": "requests",
+              "version": "2.25.1",
+              "severity": "HIGH",
+              "cwes": ["CWE-295"],
+              "path": "requirements.txt",
+              "message": "Improper certificate validation in requests"
+            }
+          ],
+          "osv-scanner": [
+            {
+              "cve": "CVE-2023-12346",
+              "osv_id": "PYSEC-2023-123",
+              "package": "flask",
+              "version": "1.1.2",
+              "severity": "MEDIUM",
+              "cwe": "CWE-79",
+              "path": "requirements.txt",
+              "message": "XSS vulnerability in Flask templating"
+            }
+          ]
+        }
+      },
+      "sast_summary": [
+        {
+          "cwe": "CWE-89",
+          "severity": "HIGH",
+          "occurrences": 12,
+          "instances": 12,
+          "scanners": ["Semgrep"],
+          "examples": [
+            {
+              "file": "app/database/queries.py",
+              "line": "23",
+              "scanner": "Semgrep",
+              "message": "SQL query uses string formatting"
+            }
+          ]
+        },
+        {
+          "cwe": "CWE-79",
+          "severity": "MEDIUM",
+          "occurrences": 20,
+          "instances": 20,
+          "scanners": ["Semgrep", "Bearer"],
+          "examples": [
+            {
+              "file": "app/views/user_profile.py",
+              "line": "45",
+              "scanner": "Semgrep",
+              "message": "User input flows into HTML without escaping"
+            }
+          ]
+        },
+        {
+          "cwe": "CWE-327",
+          "severity": "HIGH",
+          "occurrences": 3,
+          "instances": 3,
+          "scanners": ["Bearer", "Bandit"],
+          "examples": [
+            {
+              "file": "app/utils/crypto.py",
+              "line": "25",
+              "scanner": "Bearer",
+              "message": "Use of weak cryptographic algorithm (MD5)"
+            }
+          ]
+        },
+        {
+          "cwe": "CWE-502",
+          "severity": "HIGH",
+          "occurrences": 2,
+          "instances": 2,
+          "scanners": ["Bandit"],
+          "examples": [
+            {
+              "file": "app/handlers/session.py",
+              "line": "34",
+              "scanner": "Bandit",
+              "message": "Pickle used on untrusted data"
+            }
+          ]
+        },
+        {
+          "cwe": "CWE-798",
+          "severity": "MEDIUM",
+          "occurrences": 4,
+          "instances": 4,
+          "scanners": ["Bandit", "Bearer"],
+          "examples": [
+            {
+              "file": "app/config/database.py",
+              "line": "12",
+              "scanner": "Bandit",
+              "message": "Hard-coded password string"
+            }
+          ]
+        }
+      ],
+      "dep_summary": [
+        {
+          "cve": "CVE-2023-12345",
+          "severity": "HIGH",
+          "occurrences": 1,
+          "scanners": ["Trivy"],
+          "packages": ["requests"]
+        },
+        {
+          "cve": "CVE-2023-12346",
+          "severity": "MEDIUM",
+          "occurrences": 1,
+          "scanners": ["OSV-Scanner"],
+          "packages": ["flask"]
+        }
+      ]
+    },
+    {
+      "run_number": 2,
+      "project_name": "gpt_run2.zip",
+      "scan_timestamp": "2026-01-06 09:20:45",
+      "results": {
+        "sast": {
+          "semgrep": [
+            {
+              "rule_id": "python.django.security.injection.sql.sql-injection-using-string-formatting",
+              "cwe": "CWE-89",
+              "severity": "HIGH",
+              "file": "app/database/search.py",
+              "line": "41",
+              "message": "User input directly in SQL query",
+              "metadata": {}
+            },
+            {
+              "rule_id": "python.lang.security.audit.os-system-injection",
+              "cwe": "CWE-78",
+              "severity": "CRITICAL",
+              "file": "app/utils/system.py",
+              "line": "78",
+              "message": "Shell command execution with user input",
+              "metadata": {}
+            }
+          ],
+          "bearer": [
+            {
+              "rule_id": "bearer:python_lang_hardcoded_secret",
+              "cwe": "CWE-798",
+              "severity": "HIGH",
+              "file": "app/utils/api_client.py",
+              "line": "8",
+              "message": "Hard-coded API key detected",
+              "metadata": {}
+            }
+          ],
+          "bandit": [
+            {
+              "rule_id": "B602",
+              "cwe": "CWE-78",
+              "severity": "HIGH",
+              "file": "app/utils/system.py",
+              "line": "78",
+              "message": "Shell=True with user input",
+              "confidence": "HIGH"
+            }
+          ]
+        },
+        "dep": {
+          "trivy": [],
+          "osv-scanner": []
+        }
+      },
+      "sast_summary": [
+        {
+          "cwe": "CWE-89",
+          "severity": "HIGH",
+          "occurrences": 8,
+          "instances": 8,
+          "scanners": ["Semgrep"],
+          "examples": [
+            {
+              "file": "app/database/search.py",
+              "line": "41",
+              "scanner": "Semgrep",
+              "message": "User input directly in SQL query"
+            }
+          ]
+        },
+        {
+          "cwe": "CWE-78",
+          "severity": "CRITICAL",
+          "occurrences": 3,
+          "instances": 3,
+          "scanners": ["Semgrep", "Bandit"],
+          "examples": [
+            {
+              "file": "app/utils/system.py",
+              "line": "78",
+              "scanner": "Semgrep",
+              "message": "Shell command execution with user input"
+            }
+          ]
+        },
+        {
+          "cwe": "CWE-798",
+          "severity": "HIGH",
+          "occurrences": 3,
+          "instances": 3,
+          "scanners": ["Bearer", "Bandit"],
+          "examples": [
+            {
+              "file": "app/utils/api_client.py",
+              "line": "8",
+              "scanner": "Bearer",
+              "message": "Hard-coded API key detected"
+            }
+          ]
+        },
+        {
+          "cwe": "CWE-79",
+          "severity": "MEDIUM",
+          "occurrences": 15,
+          "instances": 15,
+          "scanners": ["Bearer"],
+          "examples": [
+            {
+              "file": "app/templates/search.html",
+              "line": "12",
+              "scanner": "Bearer",
+              "message": "Unescaped user input in template"
+            }
+          ]
+        }
+      ],
+      "dep_summary": []
+    },
+    {
+      "run_number": 3,
+      "project_name": "gpt_run3.zip",
+      "scan_timestamp": "2026-01-06 09:25:12",
+      "results": {
+        "sast": {
+          "semgrep": [
+            {
+              "rule_id": "python.flask.security.xss.template-unquoted-attribute-var",
+              "cwe": "CWE-79",
+              "severity": "HIGH",
+              "file": "app/views/comments.py",
+              "line": "89",
+              "message": "XSS vulnerability in comment rendering",
+              "metadata": {}
+            },
+            {
+              "rule_id": "python.lang.security.audit.path-traversal",
+              "cwe": "CWE-22",
+              "severity": "HIGH",
+              "file": "app/handlers/file_download.py",
+              "line": "19",
+              "message": "User input used in file path",
+              "metadata": {}
+            }
+          ],
+          "bearer": [
+            {
+              "rule_id": "bearer:python_lang_cleartext_transmission",
+              "cwe": "CWE-319",
+              "severity": "HIGH",
+              "file": "app/api/auth.py",
+              "line": "45",
+              "message": "Password sent over HTTP",
+              "metadata": {}
+            }
+          ],
+          "bandit": [
+            {
+              "rule_id": "B105",
+              "cwe": "CWE-798",
+              "severity": "MEDIUM",
+              "file": "app/config/settings.py",
+              "line": "8",
+              "message": "Hard-coded password",
+              "confidence": "HIGH"
+            }
+          ]
+        },
+        "dep": {
+          "trivy": [
+            {
+              "cve": "CVE-2023-99999",
+              "package": "django",
+              "version": "3.1.0",
+              "severity": "CRITICAL",
+              "cwes": ["CWE-89"],
+              "path": "requirements.txt",
+              "message": "SQL injection in Django ORM"
+            }
+          ],
+          "osv-scanner": []
+        }
+      },
+      "sast_summary": [
+        {
+          "cwe": "CWE-79",
+          "severity": "HIGH",
+          "occurrences": 18,
+          "instances": 18,
+          "scanners": ["Semgrep", "Bearer"],
+          "examples": [
+            {
+              "file": "app/views/comments.py",
+              "line": "89",
+              "scanner": "Semgrep",
+              "message": "XSS vulnerability in comment rendering"
+            }
+          ]
+        },
+        {
+          "cwe": "CWE-22",
+          "severity": "HIGH",
+          "occurrences": 7,
+          "instances": 7,
+          "scanners": ["Semgrep", "Bandit"],
+          "examples": [
+            {
+              "file": "app/handlers/file_download.py",
+              "line": "19",
+              "scanner": "Semgrep",
+              "message": "User input used in file path"
+            }
+          ]
+        },
+        {
+          "cwe": "CWE-319",
+          "severity": "HIGH",
+          "occurrences": 4,
+          "instances": 4,
+          "scanners": ["Bearer"],
+          "examples": [
+            {
+              "file": "app/api/auth.py",
+              "line": "45",
+              "scanner": "Bearer",
+              "message": "Password sent over HTTP"
+            }
+          ]
+        },
+        {
+          "cwe": "CWE-798",
+          "severity": "MEDIUM",
+          "occurrences": 5,
+          "instances": 5,
+          "scanners": ["Bandit"],
+          "examples": [
+            {
+              "file": "app/config/settings.py",
+              "line": "8",
+              "scanner": "Bandit",
+              "message": "Hard-coded password"
+            }
+          ]
+        },
+        {
+          "cwe": "CWE-89",
+          "severity": "HIGH",
+          "occurrences": 10,
+          "instances": 10,
+          "scanners": ["Semgrep"],
+          "examples": [
+            {
+              "file": "app/models/user.py",
+              "line": "56",
+              "scanner": "Semgrep",
+              "message": "String concatenation in SQL query"
+            }
+          ]
+        }
+      ],
+      "dep_summary": [
+        {
+          "cve": "CVE-2023-99999",
+          "severity": "CRITICAL",
+          "occurrences": 1,
+          "scanners": ["Trivy"],
+          "packages": ["django"]
+        }
+      ]
+    }
+  ]
+}

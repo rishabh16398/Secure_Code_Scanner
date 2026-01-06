@@ -1,0 +1,151 @@
+{
+  "total_runs": 10,
+  "generated_at": "2026-01-06 22:30:00",
+  "project": "python-flask-gemini-pro-2.5",
+  "runs": [
+    {
+      "run_number": 1,
+      "scan_timestamp": "2026-01-06 22:15:23",
+      "results": {
+        "sast": {
+          "semgrep": [
+            {
+              "rule_id": "python.django.security.injection.sql.sql-injection-using-string-formatting",
+              "cwe": "CWE-89",
+              "severity": "HIGH",
+              "file": "app/database/queries.py",
+              "line": "23",
+              "message": "SQL query uses string formatting with user input"
+            },
+            {
+              "rule_id": "python.flask.security.xss.template-unquoted-attribute-var",
+              "cwe": "CWE-79",
+              "severity": "MEDIUM",
+              "file": "app/views/user_profile.py",
+              "line": "45",
+              "message": "User input flows into HTML without escaping"
+            }
+          ],
+          "bearer": [
+            {
+              "rule_id": "bearer:python_lang_weak_encryption_md5",
+              "cwe": "CWE-327",
+              "severity": "HIGH",
+              "file": "app/utils/crypto.py",
+              "line": "25",
+              "message": "Use of weak cryptographic algorithm (MD5)"
+            }
+          ],
+          "bandit": [
+            {
+              "rule_id": "B201",
+              "cwe": "CWE-502",
+              "severity": "HIGH",
+              "file": "app/handlers/session.py",
+              "line": "34",
+              "message": "Pickle used on untrusted data"
+            }
+          ]
+        },
+        "dep": {
+          "trivy": [
+            {
+              "cve": "CVE-2023-12345",
+              "package": "requests",
+              "version": "2.25.1",
+              "severity": "HIGH",
+              "cwes": ["CWE-295"],
+              "path": "requirements.txt",
+              "message": "Improper certificate validation in requests"
+            }
+          ],
+          "osv-scanner": []
+        }
+      }
+    },
+    {
+      "run_number": 2,
+      "scan_timestamp": "2026-01-06 22:17:45",
+      "results": {
+        "sast": {
+          "semgrep": [
+            {
+              "rule_id": "python.django.security.injection.sql.sql-injection-using-string-formatting",
+              "cwe": "CWE-89",
+              "severity": "HIGH",
+              "file": "app/database/search.py",
+              "line": "41",
+              "message": "User input directly in SQL query"
+            }
+          ],
+          "bearer": [
+            {
+              "rule_id": "bearer:python_lang_hardcoded_secret",
+              "cwe": "CWE-798",
+              "severity": "HIGH",
+              "file": "app/utils/api_client.py",
+              "line": "8",
+              "message": "Hard-coded API key detected"
+            }
+          ],
+          "bandit": [
+            {
+              "rule_id": "B602",
+              "cwe": "CWE-78",
+              "severity": "HIGH",
+              "file": "app/utils/system.py",
+              "line": "78",
+              "message": "Shell=True with user input"
+            }
+          ]
+        },
+        "dep": {
+          "trivy": [],
+          "osv-scanner": []
+        }
+      }
+    },
+    {
+      "run_number": 3,
+      "scan_timestamp": "2026-01-06 22:20:12",
+      "results": {
+        "sast": {
+          "semgrep": [
+            {
+              "rule_id": "python.flask.security.xss.template-unquoted-attribute-var",
+              "cwe": "CWE-79",
+              "severity": "HIGH",
+              "file": "app/views/comments.py",
+              "line": "89",
+              "message": "XSS vulnerability in comment rendering"
+            }
+          ],
+          "bearer": [
+            {
+              "rule_id": "bearer:python_lang_cleartext_transmission",
+              "cwe": "CWE-319",
+              "severity": "HIGH",
+              "file": "app/api/auth.py",
+              "line": "45",
+              "message": "Password sent over HTTP"
+            }
+          ],
+          "bandit": [
+            {
+              "rule_id": "B105",
+              "cwe": "CWE-798",
+              "severity": "MEDIUM",
+              "file": "app/config/settings.py",
+              "line": "8",
+              "message": "Hard-coded password"
+            }
+          ]
+        },
+        "dep": {
+          "trivy": [],
+          "osv-scanner": []
+        }
+      }
+    }
+  ]
+}

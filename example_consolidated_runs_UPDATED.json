@@ -1,0 +1,233 @@
+{
+  "total_runs": 3,
+  "generated_at": "2026-01-06 10:50:00",
+  "runs": [
+    {
+      "run_number": 1,
+      "project": "python-flask-gemini-pro-2.5",
+      "scan_timestamp": "2026-01-06 09:15:23",
+      "results": {
+        "sast": {
+          "semgrep": [
+            {
+              "rule_id": "python.django.security.injection.sql.sql-injection-using-string-formatting",
+              "cwe": "CWE-89",
+              "severity": "HIGH",
+              "file": "app/database/queries.py",
+              "line": "23",
+              "message": "SQL query uses string formatting with user input",
+              "metadata": {
+                "owasp": "A03:2021 - Injection"
+              }
+            },
+            {
+              "rule_id": "python.flask.security.xss.template-unquoted-attribute-var",
+              "cwe": "CWE-79",
+              "severity": "MEDIUM",
+              "file": "app/views/user_profile.py",
+              "line": "45",
+              "message": "User input flows into HTML without escaping",
+              "metadata": {
+                "owasp": "A03:2021 - Injection"
+              }
+            },
+            {
+              "rule_id": "python.flask.security.xss.template-unquoted-attribute-var",
+              "cwe": "CWE-79",
+              "severity": "MEDIUM",
+              "file": "app/views/search.py",
+              "line": "12",
+              "message": "User input flows into HTML without escaping",
+              "metadata": {}
+            }
+          ],
+          "bearer": [
+            {
+              "rule_id": "bearer:python_lang_weak_encryption_md5",
+              "cwe": "CWE-327",
+              "severity": "HIGH",
+              "file": "app/utils/crypto.py",
+              "line": "25",
+              "message": "Use of weak cryptographic algorithm (MD5)",
+              "metadata": {}
+            },
+            {
+              "rule_id": "bearer:python_lang_hardcoded_secret",
+              "cwe": "CWE-798",
+              "severity": "HIGH",
+              "file": "app/config/settings.py",
+              "line": "8",
+              "message": "Hard-coded secret detected",
+              "metadata": {}
+            }
+          ],
+          "bandit": [
+            {
+              "rule_id": "B201",
+              "cwe": "CWE-502",
+              "severity": "HIGH",
+              "file": "app/handlers/session.py",
+              "line": "34",
+              "message": "Pickle used on untrusted data",
+              "confidence": "HIGH"
+            },
+            {
+              "rule_id": "B105",
+              "cwe": "CWE-798",
+              "severity": "MEDIUM",
+              "file": "app/config/database.py",
+              "line": "12",
+              "message": "Hard-coded password string",
+              "confidence": "MEDIUM"
+            }
+          ]
+        },
+        "dep": {
+          "trivy": [
+            {
+              "cve": "CVE-2023-12345",
+              "package": "requests",
+              "version": "2.25.1",
+              "severity": "HIGH",
+              "cwes": ["CWE-295"],
+              "path": "requirements.txt",
+              "message": "Improper certificate validation in requests"
+            }
+          ],
+          "osv-scanner": [
+            {
+              "cve": "CVE-2023-12346",
+              "osv_id": "PYSEC-2023-123",
+              "package": "flask",
+              "version": "1.1.2",
+              "severity": "MEDIUM",
+              "cwe": "CWE-79",
+              "path": "requirements.txt",
+              "message": "XSS vulnerability in Flask templating"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run_number": 2,
+      "project": "python-flask-gpt-4o-mini",
+      "scan_timestamp": "2026-01-06 09:20:45",
+      "results": {
+        "sast": {
+          "semgrep": [
+            {
+              "rule_id": "python.django.security.injection.sql.sql-injection-using-string-formatting",
+              "cwe": "CWE-89",
+              "severity": "HIGH",
+              "file": "app/database/search.py",
+              "line": "41",
+              "message": "User input directly in SQL query",
+              "metadata": {}
+            },
+            {
+              "rule_id": "python.lang.security.audit.os-system-injection",
+              "cwe": "CWE-78",
+              "severity": "CRITICAL",
+              "file": "app/utils/system.py",
+              "line": "78",
+              "message": "Shell command execution with user input",
+              "metadata": {}
+            }
+          ],
+          "bearer": [
+            {
+              "rule_id": "bearer:python_lang_hardcoded_secret",
+              "cwe": "CWE-798",
+              "severity": "HIGH",
+              "file": "app/utils/api_client.py",
+              "line": "8",
+              "message": "Hard-coded API key detected",
+              "metadata": {}
+            }
+          ],
+          "bandit": [
+            {
+              "rule_id": "B602",
+              "cwe": "CWE-78",
+              "severity": "HIGH",
+              "file": "app/utils/system.py",
+              "line": "78",
+              "message": "Shell=True with user input",
+              "confidence": "HIGH"
+            }
+          ]
+        },
+        "dep": {
+          "trivy": [],
+          "osv-scanner": []
+        }
+      }
+    },
+    {
+      "run_number": 3,
+      "project": "python-flask-claude-sonnet-4",
+      "scan_timestamp": "2026-01-06 09:25:12",
+      "results": {
+        "sast": {
+          "semgrep": [
+            {
+              "rule_id": "python.flask.security.xss.template-unquoted-attribute-var",
+              "cwe": "CWE-79",
+              "severity": "HIGH",
+              "file": "app/views/comments.py",
+              "line": "89",
+              "message": "XSS vulnerability in comment rendering",
+              "metadata": {}
+            },
+            {
+              "rule_id": "python.lang.security.audit.path-traversal",
+              "cwe": "CWE-22",
+              "severity": "HIGH",
+              "file": "app/handlers/file_download.py",
+              "line": "19",
+              "message": "User input used in file path",
+              "metadata": {}
+            }
+          ],
+          "bearer": [
+            {
+              "rule_id": "bearer:python_lang_cleartext_transmission",
+              "cwe": "CWE-319",
+              "severity": "HIGH",
+              "file": "app/api/auth.py",
+              "line": "45",
+              "message": "Password sent over HTTP",
+              "metadata": {}
+            }
+          ],
+          "bandit": [
+            {
+              "rule_id": "B105",
+              "cwe": "CWE-798",
+              "severity": "MEDIUM",
+              "file": "app/config/settings.py",
+              "line": "8",
+              "message": "Hard-coded password",
+              "confidence": "HIGH"
+            }
+          ]
+        },
+        "dep": {
+          "trivy": [
+            {
+              "cve": "CVE-2023-99999",
+              "package": "django",
+              "version": "3.1.0",
+              "severity": "CRITICAL",
+              "cwes": ["CWE-89"],
+              "path": "requirements.txt",
+              "message": "SQL injection in Django ORM"
+            }
+          ],
+          "osv-scanner": []
+        }
+      }
+    }
+  ]
+}
