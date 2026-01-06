@@ -1,0 +1,533 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container mt-4">
+  {% with messages = get_flashed_messages() %} {% if messages %} {% for msg in
+  messages %}
+  <div class="alert alert-info">{{ msg }}</div>
+  {% endfor %} {% endif %} {% endwith %}
+
+  <!-- Run Navigation -->
+  {% if all_runs and all_runs|length > 1 %}
+  <div class="card glass-card shadow-lg border-0 mb-3">
+    <div class="card-body p-3">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <h6 class="mb-0 text-accent">
+          Viewing: Run {{ current_index + 1 }} of {{ all_runs|length }}
+          <span class="text-muted small">({{ project_name }})</span>
+        </h6>
+        <div class="btn-group" role="group">
+          {% for run in all_runs %}
+          <a 
+            href="{{ url_for('view_run', run_index=loop.index0) }}" 
+            class="btn btn-sm {% if loop.index0 == current_index %}btn-accent{% else %}btn-outline-light{% endif %}"
+          >
+            Run {{ loop.index }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Action Buttons -->
+  <div
+    class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2"
+  >
+    <h1 class="h5 text-accent mb-0">Scan Results</h1>
+    <div class="d-flex gap-2 flex-wrap">
+      <a href="{{ url_for('index') }}" class="btn btn-outline-light btn-sm">
+        ⬅️ Scan More Projects
+      </a>
+      
+      {% if all_runs and all_runs|length > 1 %}
+      <a href="{{ url_for('download_comparison') }}" class="btn btn-success btn-sm">
+        📊 Download CWE Comparison (Checkmarks)
+      </a>
+      <a href="{{ url_for('download_detailed_counts') }}" class="btn btn-warning btn-sm">
+        📈 Download Detailed File Counts
+      </a>
+      {% endif %}
+      
+      <a href="{{ url_for('download_report', run_index=current_index) }}" class="btn btn-accent btn-sm">
+        📄 Download DOCX Report (This Run)
+      </a>
+      
+      <a href="{{ url_for('download_json', run_index=current_index) }}" class="btn btn-info btn-sm">
+        📋 Download JSON (This Run)
+      </a>
+    </div>
+  </div>
+
+  <div class="card glass-card shadow-lg border-0">
+    <div class="card-body p-3 p-lg-4">
+      {% if results %}
+
+      <!-- Tabs -->
+      <div class="btn-group mb-3 flex-wrap" role="group">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-light scan-tab-btn active"
+          data-target="sast-summary"
+        >
+          SAST Summary
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-light scan-tab-btn"
+          data-target="dep-summary"
+        >
+          Dependency Summary
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-light scan-tab-btn"
+          data-target="semgrep"
+        >
+          Semgrep
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-light scan-tab-btn"
+          data-target="bearer"
+        >
+          Bearer
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-light scan-tab-btn"
+          data-target="bandit"
+        >
+          Bandit
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-light scan-tab-btn"
+          data-target="trivy"
+        >
+          Trivy
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-light scan-tab-btn"
+          data-target="osv-scanner"
+        >
+          OSV
+        </button>
+      </div>
+
+      <!-- SAST SUMMARY -->
+      <div class="scan-tab-panel active" data-panel="sast-summary">
+        <h2 class="h6 text-accent mb-2">SAST Summary (by CWE)</h2>
+        {% if sast_summary and sast_summary|length > 0 %}
+        <div class="table-responsive">
+          <table class="table table-dark table-striped table-sm align-middle">
+            <thead class="table-secondary text-dark">
+              <tr>
+                <th>CWE</th>
+                <th>Severity</th>
+                <th>Found by</th>
+                <th>Occurrences</th>
+                <th>Example files (line)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in sast_summary %}
+              <tr>
+                <td>{{ row.cwe }}</td>
+                <td>
+                  {% set sev = row.severity.upper() %} {% if sev == "CRITICAL"
+                  %}
+                  <span class="badge bg-danger">{{ row.severity }}</span>
+                  {% elif sev == "HIGH" %}
+                  <span class="badge bg-warning text-dark"
+                    >{{ row.severity }}</span
+                  >
+                  {% elif sev == "MEDIUM" %}
+                  <span class="badge bg-info text-dark"
+                    >{{ row.severity }}</span
+                  >
+                  {% elif sev == "LOW" %}
+                  <span class="badge bg-success">{{ row.severity }}</span>
+                  {% else %}
+                  <span class="badge bg-secondary">{{ row.severity }}</span>
+                  {% endif %}
+                </td>
+                <td>{{ row.scanners|join(", ") }}</td>
+                <td>{{ row.instances }}</td>
+                <td>
+                  {% if row.examples %} {% for ex in row.examples %}
+                  <div class="small text-monospace">
+                    {{ ex.file }}{% if ex.line %}:{{ ex.line }}{% endif %} — {{
+                    ex.scanner }}
+                  </div>
+                  {% endfor %} {% else %}
+                  <span class="small text-muted">No example data</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="small text-muted mb-0">
+          No SAST findings detected by Semgrep, Bearer, or Bandit.
+        </p>
+        {% endif %}
+      </div>
+
+      <!-- DEP SUMMARY -->
+      <div class="scan-tab-panel" data-panel="dep-summary">
+        <h2 class="h6 text-accent mb-2">Dependency Summary (by CVE)</h2>
+        {% if dep_summary and dep_summary|length > 0 %}
+        <div class="table-responsive">
+          <table class="table table-dark table-striped table-sm align-middle">
+            <thead class="table-secondary text-dark">
+              <tr>
+                <th>CVE</th>
+                <th>Severity</th>
+                <th>Found by</th>
+                <th>Packages</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in dep_summary %}
+              <tr>
+                <td>{{ row.cve }}</td>
+                <td>
+                  {% set sev = row.severity.upper() %} {% if sev == "CRITICAL"
+                  %}
+                  <span class="badge bg-danger">{{ row.severity }}</span>
+                  {% elif sev == "HIGH" %}
+                  <span class="badge bg-warning text-dark"
+                    >{{ row.severity }}</span
+                  >
+                  {% elif sev == "MEDIUM" %}
+                  <span class="badge bg-info text-dark"
+                    >{{ row.severity }}</span
+                  >
+                  {% elif sev == "LOW" %}
+                  <span class="badge bg-success">{{ row.severity }}</span>
+                  {% else %}
+                  <span class="badge bg-secondary">{{ row.severity }}</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if row.scanners %}
+                  <div class="small">{{ row.scanners|join(", ") }}</div>
+                  {% else %}
+                  <span class="small text-muted">N/A</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if row.packages %}
+                  <div class="small">{{ row.packages|join(", ") }}</div>
+                  {% else %}
+                  <span class="small text-muted">N/A</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if row.examples %} {% set ex = row.examples[0] %}
+                  <div class="small">
+                    {{ ex.package }}{% if ex.version %} ({{ ex.version }}){%
+                    endif %}
+                  </div>
+                  {% if ex.path %}
+                  <div class="small text-monospace">{{ ex.path }}</div>
+                  {% endif %} {% else %}
+                  <span class="small text-muted">No example data</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="small text-muted mb-0">
+          No dependency vulnerabilities reported by Trivy or OSV-Scanner.
+        </p>
+        {% endif %}
+      </div>
+
+      <!-- SEMGREP RAW -->
+      <div class="scan-tab-panel" data-panel="semgrep">
+        <h2 class="h6 text-accent mb-2">Semgrep (SAST)</h2>
+        {% set semgrep = results.sast.semgrep %} {% if semgrep and
+        semgrep|length > 0 %}
+        <div class="table-responsive">
+          <table class="table table-dark table-striped table-sm align-middle">
+            <thead class="table-secondary text-dark">
+              <tr>
+                <th>Rule</th>
+                <th>CWE</th>
+                <th>Severity</th>
+                <th>File</th>
+                <th>Line</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for f in semgrep %}
+              <tr>
+                <td class="small text-monospace">{{ f.rule_id }}</td>
+                <td>{{ f.cwe }}</td>
+                <td>
+                  {% set sev = f.severity.upper() %} {% if sev == "CRITICAL" %}
+                  <span class="badge bg-danger">{{ f.severity }}</span>
+                  {% elif sev == "HIGH" %}
+                  <span class="badge bg-warning text-dark"
+                    >{{ f.severity }}</span
+                  >
+                  {% elif sev == "MEDIUM" %}
+                  <span class="badge bg-info text-dark">{{ f.severity }}</span>
+                  {% elif sev == "LOW" %}
+                  <span class="badge bg-success">{{ f.severity }}</span>
+                  {% else %}
+                  <span class="badge bg-secondary">{{ f.severity }}</span>
+                  {% endif %}
+                </td>
+                <td class="small text-monospace">{{ f.file }}</td>
+                <td class="small text-monospace">{{ f.line }}</td>
+                <td class="small">{{ f.message }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="small text-muted mb-0">
+          No issues reported by Semgrep (or Semgrep did not run).
+        </p>
+        {% endif %}
+      </div>
+
+      <!-- BEARER RAW -->
+      <div class="scan-tab-panel" data-panel="bearer">
+        <h2 class="h6 text-accent mb-2">Bearer (SAST)</h2>
+        {% set bearer = results.sast.bearer %} {% if bearer and bearer|length >
+        0 %}
+        <div class="table-responsive">
+          <table class="table table-dark table-striped table-sm align-middle">
+            <thead class="table-secondary text-dark">
+              <tr>
+                <th>Rule</th>
+                <th>CWE</th>
+                <th>Severity</th>
+                <th>File</th>
+                <th>Line</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for f in bearer %}
+              <tr>
+                <td class="small text-monospace">{{ f.rule_id }}</td>
+                <td>{{ f.cwe }}</td>
+                <td>
+                  {% set sev = f.severity.upper() %} {% if sev == "CRITICAL" %}
+                  <span class="badge bg-danger">{{ f.severity }}</span>
+                  {% elif sev == "HIGH" %}
+                  <span class="badge bg-warning text-dark"
+                    >{{ f.severity }}</span
+                  >
+                  {% elif sev == "MEDIUM" %}
+                  <span class="badge bg-info text-dark">{{ f.severity }}</span>
+                  {% elif sev == "LOW" %}
+                  <span class="badge bg-success">{{ f.severity }}</span>
+                  {% else %}
+                  <span class="badge bg-secondary">{{ f.severity }}</span>
+                  {% endif %}
+                </td>
+                <td class="small text-monospace">{{ f.file }}</td>
+                <td class="small text-monospace">{{ f.line }}</td>
+                <td class="small">{{ f.message }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="small text-muted mb-0">No issues reported by Bearer.</p>
+        {% endif %}
+      </div>
+
+      <!-- BANDIT RAW -->
+      <div class="scan-tab-panel" data-panel="bandit">
+        <h2 class="h6 text-accent mb-2">Bandit (Python SAST)</h2>
+        {% set bandit = results.sast.bandit %} {% if bandit and bandit|length >
+        0 %}
+        <div class="table-responsive">
+          <table class="table table-dark table-striped table-sm align-middle">
+            <thead class="table-secondary text-dark">
+              <tr>
+                <th>Rule</th>
+                <th>CWE</th>
+                <th>Severity</th>
+                <th>File</th>
+                <th>Line</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for f in bandit %}
+              <tr>
+                <td class="small text-monospace">{{ f.rule_id }}</td>
+                <td>{{ f.cwe }}</td>
+                <td>
+                  {% set sev = f.severity.upper() %} {% if sev == "CRITICAL" %}
+                  <span class="badge bg-danger">{{ f.severity }}</span>
+                  {% elif sev == "HIGH" %}
+                  <span class="badge bg-warning text-dark"
+                    >{{ f.severity }}</span
+                  >
+                  {% elif sev == "MEDIUM" %}
+                  <span class="badge bg-info text-dark">{{ f.severity }}</span>
+                  {% elif sev == "LOW" %}
+                  <span class="badge bg-success">{{ f.severity }}</span>
+                  {% else %}
+                  <span class="badge bg-secondary">{{ f.severity }}</span>
+                  {% endif %}
+                </td>
+                <td class="small text-monospace">{{ f.file }}</td>
+                <td class="small text-monospace">{{ f.line }}</td>
+                <td class="small">{{ f.message }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="small text-muted mb-0">
+          No issues reported by Bandit (or project has no Python files).
+        </p>
+        {% endif %}
+      </div>
+
+      <!-- TRIVY RAW -->
+      <div class="scan-tab-panel" data-panel="trivy">
+        <h2 class="h6 text-accent mb-2">Trivy (dependencies)</h2>
+        {% set trivy = results.dep['trivy'] %} {% if trivy and trivy|length > 0
+        %}
+        <div class="table-responsive">
+          <table class="table table-dark table-striped table-sm align-middle">
+            <thead class="table-secondary text-dark">
+              <tr>
+                <th>CVE</th>
+                <th>Package</th>
+                <th>Version</th>
+                <th>Severity</th>
+                <th>CWEs</th>
+                <th>Target</th>
+                <th>Title</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for f in trivy %}
+              <tr>
+                <td class="small text-monospace">{{ f.cve }}</td>
+                <td class="small text-monospace">{{ f.package }}</td>
+                <td class="small text-monospace">{{ f.version }}</td>
+                <td>
+                  {% set sev = f.severity.upper() %} {% if sev == "CRITICAL" %}
+                  <span class="badge bg-danger">{{ f.severity }}</span>
+                  {% elif sev == "HIGH" %}
+                  <span class="badge bg-warning text-dark"
+                    >{{ f.severity }}</span
+                  >
+                  {% elif sev == "MEDIUM" %}
+                  <span class="badge bg-info text-dark">{{ f.severity }}</span>
+                  {% elif sev == "LOW" %}
+                  <span class="badge bg-success">{{ f.severity }}</span>
+                  {% else %}
+                  <span class="badge bg-secondary">{{ f.severity }}</span>
+                  {% endif %}
+                </td>
+                <td class="small">
+                  {% if f.cwes %} {{ f.cwes|join(", ") }} {% else %} CWE-UNKNOWN
+                  {% endif %}
+                </td>
+                <td class="small text-monospace">{{ f.path }}</td>
+                <td class="small">{{ f.message }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="small text-muted mb-0">
+          No dependency findings from Trivy (or Trivy failed for this scan).
+        </p>
+        {% endif %}
+      </div>
+
+      <!-- OSV RAW -->
+      <div class="scan-tab-panel" data-panel="osv-scanner">
+        <h2 class="h6 text-accent mb-2">OSV-Scanner (dependencies)</h2>
+        {% set osv = results.dep['osv-scanner'] %} {% if osv and osv|length > 0
+        %}
+        <div class="table-responsive">
+          <table class="table table-dark table-striped table-sm align-middle">
+            <thead class="table-secondary text-dark">
+              <tr>
+                <th>CVE / OSV ID</th>
+                <th>Package</th>
+                <th>Version</th>
+                <th>Severity</th>
+                <th>CWE</th>
+                <th>Lockfile</th>
+                <th>Summary</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for f in osv %}
+              <tr>
+                <td class="small text-monospace">{{ f.cve or f.osv_id }}</td>
+                <td class="small text-monospace">{{ f.package }}</td>
+                <td class="small text-monospace">{{ f.version }}</td>
+                <td class="small">{{ f.severity }}</td>
+                <td class="small">{{ f.cwe or "" }}</td>
+                <td class="small text-monospace">{{ f.path }}</td>
+                <td class="small">{{ f.message }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="small text-muted mb-0">
+          No dependency findings from OSV-Scanner (or no lockfiles found).
+        </p>
+        {% endif %}
+      </div>
+
+      {% else %}
+      <p class="small text-muted mb-0">
+        No results to show. Please run a scan first.
+      </p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  const tabButtons = document.querySelectorAll(".scan-tab-btn");
+  const tabPanels = document.querySelectorAll(".scan-tab-panel");
+
+  tabButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const target = btn.getAttribute("data-target");
+      tabButtons.forEach((b) => b.classList.remove("active"));
+      tabPanels.forEach((p) => p.classList.remove("active"));
+      btn.classList.add("active");
+      const panel = document.querySelector(
+        '.scan-tab-panel[data-panel="' + target + '"]'
+      );
+      if (panel) panel.classList.add("active");
+    });
+  });
+</script>
+
+{% endblock %}

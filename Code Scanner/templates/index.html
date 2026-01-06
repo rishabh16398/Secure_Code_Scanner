@@ -1,0 +1,104 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card glass-card shadow-lg border-0">
+      <div class="card-body p-4">
+        <h1 class="h4 mb-3 text-accent">Multi-Run Security Scanner</h1>
+        
+        {% if num_runs > 0 %}
+        <div class="alert alert-info mb-4">
+          <strong>📊 Current Status:</strong> You have {{ num_runs }} run(s) stored.
+          <div class="mt-2">
+            <a href="{{ url_for('results_page') }}" class="btn btn-sm btn-primary">View Results</a>
+            <a href="{{ url_for('clear_runs') }}" class="btn btn-sm btn-warning" onclick="return confirm('Clear all previous runs?')">Clear All Runs</a>
+          </div>
+        </div>
+        {% endif %}
+        
+        <p class="text-muted small mb-4">
+          Upload <strong>multiple .zip files</strong> (e.g., 10 code generations from same prompt). Each will be scanned with:
+          <span class="badge bg-info text-dark">Semgrep (config auto)</span>
+          <span class="badge bg-info text-dark">Bearer (SAST)</span>
+          <span class="badge bg-info text-dark">Bandit (Python SAST)</span>
+          <span class="badge bg-warning text-dark">Trivy (deps)</span>
+          <span class="badge bg-warning text-dark">OSV-Scanner (deps)</span>
+        </p>
+
+        <form id="scan-form" method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="project_zip" class="form-label">
+              Select Project ZIP files (can select multiple)
+            </label>
+            <input
+              class="form-control"
+              type="file"
+              id="project_zip"
+              name="project_zip"
+              accept=".zip"
+              multiple
+              required
+            />
+            <div class="form-text">
+              Tip: Hold Ctrl/Cmd to select multiple files, or drag & drop multiple files
+            </div>
+          </div>
+          
+          <div class="mb-3 form-check">
+            <input 
+              type="checkbox" 
+              class="form-check-input" 
+              id="clear_previous" 
+              name="clear_previous" 
+              value="yes"
+              {% if num_runs == 0 %}checked{% endif %}
+            >
+            <label class="form-check-label" for="clear_previous">
+              Clear previous runs before scanning
+            </label>
+          </div>
+
+          <button class="btn btn-accent w-100" type="submit" id="scan-btn">
+            🚀 Run Security Scans
+          </button>
+
+          <p class="text-muted small mt-3">
+            All scanning happens locally on this machine.
+          </p>
+        </form>
+
+        {% if num_runs > 0 %}
+        <div class="alert alert-info mt-3">
+          <small>
+            💾 <strong>{{ num_runs }}</strong> scan(s) stored in memory.
+            <a href="{{ url_for('clear_runs') }}" class="alert-link">Clear runs</a>
+          </small>
+        </div>
+        {% endif %}
+
+        <div class="mt-3">
+          <a href="{{ url_for('cleanup_all') }}" class="btn btn-sm btn-outline-warning">
+            🧹 Clean Up Temporary Files
+          </a>
+          <small class="text-muted d-block mt-2">
+            Removes uploads, temp extractions, and old reports
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const fileInput = document.getElementById("project_zip");
+
+  // Show selected file count
+  fileInput.addEventListener("change", function() {
+    const count = this.files.length;
+    if (count > 0) {
+      console.log(`Selected ${count} file(s)`);
+    }
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.bg-gradient-primary {
+  background: radial-gradient(circle at top left, #4f46e5, #111827);
+}
+
+.text-accent {
+  color: #a5b4fc;
+}
+
+.btn-accent {
+  background: linear-gradient(90deg, #6366f1, #e879f9);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+}
+
+.btn-accent:hover {
+  opacity: 0.92;
+}
+
+.glass-card {
+  background: rgba(15, 23, 42, 0.92);
+  border-radius: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  backdrop-filter: blur(16px);
+}
+
+/* Severity badges */
+.bg-sev-critical,
+.bg-outline-sev-critical {
+  background-color: #b91c1c !important;
+}
+
+.bg-sev-high,
+.bg-outline-sev-high {
+  background-color: #dc2626 !important;
+}
+
+.bg-sev-medium,
+.bg-outline-sev-medium {
+  background-color: #f97316 !important;
+}
+
+.bg-sev-low,
+.bg-outline-sev-low {
+  background-color: #22c55e !important;
+}
+
+.bg-sev-info,
+.bg-outline-sev-info {
+  background-color: #0ea5e9 !important;
+}
+
+.bg-sev-unknown,
+.bg-outline-sev-unknown {
+  background-color: #6b7280 !important;
+}
+
+.bg-outline {
+  background-color: transparent;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+}
+
+/* Active view button */
+.view-btn.active {
+  background-color: #6366f1 !important;
+  border-color: #6366f1 !important;
+  color: #fff !important;
+}
+
+code {
+  font-size: 0.8rem;
+}
