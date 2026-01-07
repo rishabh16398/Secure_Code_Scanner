@@ -1,0 +1,2940 @@
+{
+  "total_runs": 10,
+  "generated_at": "2026-01-07 21:41:45",
+  "cwes": {
+    "CWE-532": {
+      "cwe_id": "CWE-532",
+      "cwe_name": "Insertion of Sensitive Information into Log File",
+      "found_in_runs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "total_runs_found": 10,
+      "tools_detected_by": [
+        "bearer"
+      ],
+      "severity_levels": [
+        "LOW",
+        "MEDIUM"
+      ],
+      "file_counts_per_run": {
+        "run_1": 35,
+        "run_2": 25,
+        "run_3": 37,
+        "run_4": 31,
+        "run_5": 26,
+        "run_6": 32,
+        "run_7": 34,
+        "run_8": 28,
+        "run_9": 38,
+        "run_10": 26
+      },
+      "total_unique_files": 312,
+      "descriptions": [
+        {
+          "tool": "Bearer",
+          "description": "Leakage of sensitive information in logger message"
+        },
+        {
+          "tool": "Bearer",
+          "description": "Leakage of information in logger message"
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/services/ruleEvaluator.examples.ts",
+          "line": 130,
+          "scanner": "bearer",
+          "message": "Leakage of sensitive information in logger message"
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/services/ruleEvaluator.examples.ts",
+          "line": 131,
+          "scanner": "bearer",
+          "message": "Leakage of sensitive information in logger message"
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/services/ruleEvaluator.examples.ts",
+          "line": 136,
+          "scanner": "bearer",
+          "message": "Leakage of sensitive information in logger message"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/EditReportPage.jsx",
+          "line": 23,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/INTEGRATION_GUIDE.js",
+          "line": 25,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/INTEGRATION_GUIDE.js",
+          "line": 44,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/src/services/authService.ts",
+          "line": 263,
+          "scanner": "bearer",
+          "message": "Leakage of sensitive information in logger message"
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/app.js",
+          "line": 65,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/app.js",
+          "line": 77,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/backend/middleware/errorHandler.ts",
+          "line": 283,
+          "scanner": "bearer",
+          "message": "Leakage of sensitive information in logger message"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/backend/middleware/errorHandler.ts",
+          "line": 285,
+          "scanner": "bearer",
+          "message": "Leakage of sensitive information in logger message"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/backend/middleware/errorHandler.ts",
+          "line": 287,
+          "scanner": "bearer",
+          "message": "Leakage of sensitive information in logger message"
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/backend/config/index.ts",
+          "line": 107,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/backend/config/production.ts",
+          "line": 370,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/backend/middleware/errorHandler.ts",
+          "line": 148,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/RegisterForm.tsx",
+          "line": 36,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/backend/middleware/errorHandler.ts",
+          "line": 94,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/backend/middleware/errorHandler.ts",
+          "line": 114,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/NotificationPanel.example.tsx",
+          "line": 47,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/NotificationPanel.example.tsx",
+          "line": 50,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/backend/src/controllers/ExportController.ts",
+          "line": 30,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/controllers/ExportController.ts",
+          "line": 57,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/controllers/ExportController.ts",
+          "line": 86,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/controllers/ExportController.ts",
+          "line": 115,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/middleware/errorHandler.ts",
+          "line": 129,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/middleware/errorHandler.ts",
+          "line": 223,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/middleware/errorHandler.ts",
+          "line": 266,
+          "scanner": "bearer",
+          "message": "Leakage of information in logger message"
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/src/services/ruleEvaluationEngine.example.ts",
+          "line": 43,
+          "scanner": "bearer",
+          "message": "Leakage of sensitive information in logger message"
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/src/services/ruleEvaluationEngine.example.ts",
+          "line": 53,
+          "scanner": "bearer",
+          "message": "Leakage of sensitive information in logger message"
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/src/services/ruleEvaluationEngine.example.ts",
+          "line": 63,
+          "scanner": "bearer",
+          "message": "Leakage of sensitive information in logger message"
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 31.2,
+        "max_files_in_single_run": 38,
+        "min_files_in_single_run": 25,
+        "total_instances_across_runs": 312
+      }
+    },
+    "CWE-330": {
+      "cwe_id": "CWE-330",
+      "cwe_name": "Use of Insufficiently Random Values",
+      "found_in_runs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "total_runs_found": 10,
+      "tools_detected_by": [
+        "bearer"
+      ],
+      "severity_levels": [
+        "LOW"
+      ],
+      "file_counts_per_run": {
+        "run_1": 7,
+        "run_2": 2,
+        "run_3": 6,
+        "run_4": 5,
+        "run_5": 2,
+        "run_6": 3,
+        "run_7": 6,
+        "run_8": 2,
+        "run_9": 4,
+        "run_10": 2
+      },
+      "total_unique_files": 39,
+      "descriptions": [
+        {
+          "tool": "Bearer",
+          "description": "Usage of insufficient random value"
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/auditService.ts",
+          "line": 55,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/routes/receipts.ts",
+          "line": 141,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/utils/fileValidation.ts",
+          "line": 149,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/src/pages/AuditManagement.tsx",
+          "line": 113,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/src/services/utils.ts",
+          "line": 89,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/src/middleware/upload.ts",
+          "line": 18,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/src/services/authService.ts",
+          "line": 91,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/src/utils/passwordUtils.ts",
+          "line": 113,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/backend/utils/passwordUtils.ts",
+          "line": 134,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/backend/utils/passwordUtils.ts",
+          "line": 135,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/backend/utils/passwordUtils.ts",
+          "line": 136,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/backend/src/routes/receipts.ts",
+          "line": 13,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/src/hooks/performance/useDebounce.examples.tsx",
+          "line": 157,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/backend/middleware/logger.ts",
+          "line": 169,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/backend/middleware/logger.ts",
+          "line": 199,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/src/components/ui/LoadingStates/SkeletonTable.tsx",
+          "line": 161,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/middleware/logger.ts",
+          "line": 115,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/notification.mock.ts",
+          "line": 135,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/passwordUtils.ts",
+          "line": 138,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/services/rulesApiService.ts",
+          "line": 363,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/services/rulesEngine.ts",
+          "line": 132,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/src/services/s3.ts",
+          "line": 57,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/frontend/src/utils/monitoring.ts",
+          "line": 230,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/services/rulesApi.ts",
+          "line": 597,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/services/reportService.js",
+          "line": 779,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/src/utils/fileValidation.ts",
+          "line": 291,
+          "scanner": "bearer",
+          "message": "Usage of insufficient random value"
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 3.9,
+        "max_files_in_single_run": 7,
+        "min_files_in_single_run": 2,
+        "total_instances_across_runs": 39
+      }
+    },
+    "CWE-693": {
+      "cwe_id": "CWE-693",
+      "cwe_name": "Unknown Vulnerability (CWE-693)",
+      "found_in_runs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "total_runs_found": 10,
+      "tools_detected_by": [
+        "bearer"
+      ],
+      "severity_levels": [
+        "MEDIUM"
+      ],
+      "file_counts_per_run": {
+        "run_1": 3,
+        "run_2": 4,
+        "run_3": 4,
+        "run_4": 4,
+        "run_5": 2,
+        "run_6": 2,
+        "run_7": 4,
+        "run_8": 3,
+        "run_9": 5,
+        "run_10": 2
+      },
+      "total_unique_files": 33,
+      "descriptions": [
+        {
+          "tool": "Bearer",
+          "description": "Usage of default cookie configuration"
+        },
+        {
+          "tool": "Bearer",
+          "description": "Missing Helmet configuration on HTTP headers"
+        },
+        {
+          "tool": "Bearer",
+          "description": "Missing server configuration to reduce server fingerprinting"
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/config/production.ts",
+          "line": 162,
+          "scanner": "bearer",
+          "message": "Usage of default cookie configuration"
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/config/security.ts",
+          "line": 125,
+          "scanner": "bearer",
+          "message": "Usage of default cookie configuration"
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/config/security.ts",
+          "line": 285,
+          "scanner": "bearer",
+          "message": "Usage of default cookie configuration"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/config/security.ts",
+          "line": 33,
+          "scanner": "bearer",
+          "message": "Usage of default cookie configuration"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/config/security.ts",
+          "line": 215,
+          "scanner": "bearer",
+          "message": "Usage of default cookie configuration"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/INTEGRATION_GUIDE.js",
+          "line": 9,
+          "scanner": "bearer",
+          "message": "Missing Helmet configuration on HTTP headers"
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/config/production.ts",
+          "line": 50,
+          "scanner": "bearer",
+          "message": "Usage of default cookie configuration"
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/config/security.ts",
+          "line": 95,
+          "scanner": "bearer",
+          "message": "Usage of default cookie configuration"
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/app.js",
+          "line": 7,
+          "scanner": "bearer",
+          "message": "Missing Helmet configuration on HTTP headers"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/backend/config/production.ts",
+          "line": 85,
+          "scanner": "bearer",
+          "message": "Usage of default cookie configuration"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/backend/config/security.ts",
+          "line": 248,
+          "scanner": "bearer",
+          "message": "Usage of default cookie configuration"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/src/middleware/index.ts",
+          "line": 68,
+          "scanner": "bearer",
+          "message": "Missing Helmet configuration on HTTP headers"
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/backend/config/security.ts",
+          "line": 393,
+          "scanner": "bearer",
+          "message": "Usage of default cookie configuration"
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/expenseforge/backend/src/index.ts",
+          "line": 10,
+          "scanner": "bearer",
+          "message": "Missing server configuration to reduce server fingerprinting"
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/backend/config/security.ts",
+          "line": 233,
+          "scanner": "bearer",
+          "message": "Usage of default cookie configuration"
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/expenseforge/backend/src/index.ts",
+          "line": 10,
+          "scanner": "bearer",
+          "message": "Missing server configuration to reduce server fingerprinting"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/config/production.ts",
+          "line": 71,
+          "scanner": "bearer",
+          "message": "Usage of default cookie configuration"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/config/security.ts",
+          "line": 193,
+          "scanner": "bearer",
+          "message": "Usage of default cookie configuration"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/server.example.ts",
+          "line": 67,
+          "scanner": "bearer",
+          "message": "Missing Helmet configuration on HTTP headers"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/config/security.ts",
+          "line": 148,
+          "scanner": "bearer",
+          "message": "Usage of default cookie configuration"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/middleware/usage-example.ts",
+          "line": 51,
+          "scanner": "bearer",
+          "message": "Missing Helmet configuration on HTTP headers"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/middleware/usage-example.ts",
+          "line": 51,
+          "scanner": "bearer",
+          "message": "Missing server configuration to reduce server fingerprinting"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/config/production.ts",
+          "line": 354,
+          "scanner": "bearer",
+          "message": "Usage of default cookie configuration"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/middleware/example-integration.ts",
+          "line": 51,
+          "scanner": "bearer",
+          "message": "Missing Helmet configuration on HTTP headers"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/utils/example-integration.ts",
+          "line": 47,
+          "scanner": "bearer",
+          "message": "Missing Helmet configuration on HTTP headers"
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/backend/utils/integration-example.ts",
+          "line": 32,
+          "scanner": "bearer",
+          "message": "Missing Helmet configuration on HTTP headers"
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/src/index.ts",
+          "line": 3,
+          "scanner": "bearer",
+          "message": "Missing Helmet configuration on HTTP headers"
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/backend/utils/integration-example.ts",
+          "line": 32,
+          "scanner": "bearer",
+          "message": "Missing server configuration to reduce server fingerprinting"
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 3.3,
+        "max_files_in_single_run": 5,
+        "min_files_in_single_run": 2,
+        "total_instances_across_runs": 33
+      }
+    },
+    "CWE-134": {
+      "cwe_id": "CWE-134",
+      "cwe_name": "Use of Externally-Controlled Format String",
+      "found_in_runs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "total_runs_found": 10,
+      "tools_detected_by": [
+        "bearer",
+        "semgrep"
+      ],
+      "severity_levels": [
+        "HIGH",
+        "INFO"
+      ],
+      "file_counts_per_run": {
+        "run_1": 3,
+        "run_2": 3,
+        "run_3": 5,
+        "run_4": 3,
+        "run_5": 1,
+        "run_6": 6,
+        "run_7": 3,
+        "run_8": 2,
+        "run_9": 3,
+        "run_10": 4
+      },
+      "total_unique_files": 33,
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "tool": "Bearer",
+          "description": "Unsanitized user input in format string"
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/middleware/upload.ts",
+          "line": 159,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/services/ruleEvaluator.ts",
+          "line": 189,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/services/ruleEvaluator.ts",
+          "line": 240,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/services/rulesEngine.ts",
+          "line": 183,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/src/services/expenseApi.js",
+          "line": 56,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/src/services/expenseApi.js",
+          "line": 109,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/utils/metrics.ts",
+          "line": 89,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/utils/metrics.ts",
+          "line": 93,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/utils/metrics.ts",
+          "line": 97,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/frontend/src/services/rulesApi.ts",
+          "line": 88,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/frontend/src/services/rulesApi.ts",
+          "line": 143,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/frontend/src/services/rulesApi.ts",
+          "line": 172,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/frontend/src/utils/storage.ts",
+          "line": 58,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/frontend/src/utils/storage.ts",
+          "line": 76,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/frontend/src/utils/storage.ts",
+          "line": 94,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/frontend/src/examples/MonitoringExamples.tsx",
+          "line": 133,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/src/components/ui/ErrorBoundaries/FormErrorBoundary.tsx",
+          "line": 46,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/src/components/ui/ErrorBoundaries/PageErrorBoundary.tsx",
+          "line": 45,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/frontend/src/utils/monitoring.ts",
+          "line": 229,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/frontend/src/utils/monitoring.ts",
+          "line": 257,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/scripts/performance-analysis.js",
+          "line": 80,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/middleware/rateLimiting.ts",
+          "line": 99,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/middleware/usage-example.ts",
+          "line": 306,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/frontend/src/services/reportApi.js",
+          "line": 29,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/frontend/src/services/reportApi.js",
+          "line": 60,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/frontend/src/services/reportApi.js",
+          "line": 75,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/frontend/src/components/auth/OAuthButton.tsx",
+          "line": 139,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/frontend/src/services/expenseApi.js",
+          "line": 104,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/frontend/src/services/expenseApi.js",
+          "line": 166,
+          "scanner": "semgrep",
+          "message": "Detected string concatenation with a non-literal variable in a util.format / console.log function. If an attacker injects a format specifier in the string, it will forge the log message. Try to use constant values for the format string."
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 3.3,
+        "max_files_in_single_run": 6,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 33
+      }
+    },
+    "CWE-798": {
+      "cwe_id": "CWE-798",
+      "cwe_name": "Use of Hard-coded Credentials",
+      "found_in_runs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "total_runs_found": 10,
+      "tools_detected_by": [
+        "bearer",
+        "semgrep"
+      ],
+      "severity_levels": [
+        "CRITICAL",
+        "INFO"
+      ],
+      "file_counts_per_run": {
+        "run_1": 4,
+        "run_2": 2,
+        "run_3": 3,
+        "run_4": 1,
+        "run_5": 2,
+        "run_6": 3,
+        "run_7": 5,
+        "run_8": 2,
+        "run_9": 3,
+        "run_10": 2
+      },
+      "total_unique_files": 27,
+      "descriptions": [
+        {
+          "tool": "Bearer",
+          "description": "Usage of hard-coded secret"
+        },
+        {
+          "tool": "Bearer",
+          "description": "Leakage of hard-coded secret in JWT"
+        },
+        {
+          "tool": "Semgrep",
+          "description": "bcrypt hash detected"
+        },
+        {
+          "tool": "Semgrep",
+          "description": "Google OAuth Access Token detected"
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/src/services/authService.ts",
+          "line": 55,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/src/services/authService.ts",
+          "line": 65,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/src/services/tokenService.ts",
+          "line": 31,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/config/index.ts",
+          "line": 47,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/config/index.ts",
+          "line": 48,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/services/tokenService.ts",
+          "line": 40,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/src/services/tokenService.ts",
+          "line": 43,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/src/services/tokenService.ts",
+          "line": 63,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/src/services/tokenService.ts",
+          "line": 224,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/backend/services/tokenService.ts",
+          "line": 39,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/backend/services/tokenService.ts",
+          "line": 58,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/backend/services/tokenService.ts",
+          "line": 152,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/backend/config/security.ts",
+          "line": 389,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/frontend/src/utils/constants.ts",
+          "line": 19,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/frontend/src/utils/constants.ts",
+          "line": 20,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/.history/coder-Running_subtask_for_callingAgent=supervisor,_conversationPurpose=Phase_1_code)__database_tables_only.txt",
+          "line": 139,
+          "scanner": "semgrep",
+          "message": "bcrypt hash detected"
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/.history/coder-Running_subtask_for_callingAgent=supervisor,_conversationPurpose=Phase_1_code)__database_tables_only.txt",
+          "line": 139,
+          "scanner": "semgrep",
+          "message": "bcrypt hash detected"
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/.history/coder-Running_subtask_for_callingAgent=supervisor,_conversationPurpose=Phase_1_code)__database_tables_only.txt",
+          "line": 139,
+          "scanner": "semgrep",
+          "message": "Google OAuth Access Token detected"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/.history/coder-Running_subtask_for_callingAgent=supervisor,_conversationPurpose=Phase_1_code)__database_schema_setup.txt",
+          "line": 98,
+          "scanner": "semgrep",
+          "message": "Google OAuth Access Token detected"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/.history/coder-Running_subtask_for_callingAgent=supervisor,_conversationPurpose=Phase_1_code)__database_schema_setup.txt",
+          "line": 192,
+          "scanner": "semgrep",
+          "message": "Google OAuth Access Token detected"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/.history/memory-coder-Running_subtask_for_callingAgent_supervisor__conversationPurpose_Phase_1_code___database_schema_setup.json",
+          "line": 188,
+          "scanner": "semgrep",
+          "message": "Google OAuth Access Token detected"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/services/tokenService.ts",
+          "line": 21,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/config/security.ts",
+          "line": 145,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/services/tokenService.ts",
+          "line": 4,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/config/security.ts",
+          "line": 158,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/middleware/logger.ts",
+          "line": 19,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/middleware/logger.ts",
+          "line": 21,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/frontend/src/services/authApi.ts",
+          "line": 53,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/frontend/src/services/config.ts",
+          "line": 41,
+          "scanner": "bearer",
+          "message": "Usage of hard-coded secret"
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 2.7,
+        "max_files_in_single_run": 5,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 27
+      }
+    },
+    "CWE-250": {
+      "cwe_id": "CWE-250",
+      "cwe_name": "Execution with Unnecessary Privileges",
+      "found_in_runs": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "total_runs_found": 9,
+      "tools_detected_by": [
+        "semgrep"
+      ],
+      "severity_levels": [
+        "INFO"
+      ],
+      "file_counts_per_run": {
+        "run_1": 2,
+        "run_2": 2,
+        "run_4": 2,
+        "run_5": 3,
+        "run_6": 2,
+        "run_7": 2,
+        "run_8": 2,
+        "run_9": 2,
+        "run_10": 2
+      },
+      "total_unique_files": 19,
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/expenseforge/backend/Dockerfile",
+          "line": 20,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/frontend/Dockerfile",
+          "line": 24,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/expenseforge/backend/Dockerfile",
+          "line": 36,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/frontend/Dockerfile",
+          "line": 27,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/expenseforge/backend/Dockerfile",
+          "line": 26,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/expenseforge/frontend/Dockerfile",
+          "line": 29,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/Dockerfile",
+          "line": 47,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/expenseforge/backend/Dockerfile",
+          "line": 20,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/expenseforge/frontend/Dockerfile",
+          "line": 20,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/expenseforge/backend/Dockerfile",
+          "line": 23,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/frontend/Dockerfile",
+          "line": 20,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/backend/Dockerfile",
+          "line": 38,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/frontend/Dockerfile",
+          "line": 33,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/expenseforge/backend/Dockerfile",
+          "line": 37,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/frontend/Dockerfile",
+          "line": 23,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/expenseforge/backend/Dockerfile",
+          "line": 23,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/frontend/Dockerfile",
+          "line": 20,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/expenseforge/backend/Dockerfile",
+          "line": 22,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/frontend/Dockerfile",
+          "line": 22,
+          "scanner": "semgrep",
+          "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'."
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 2.11,
+        "max_files_in_single_run": 3,
+        "min_files_in_single_run": 2,
+        "total_instances_across_runs": 19
+      }
+    },
+    "CWE-208": {
+      "cwe_id": "CWE-208",
+      "cwe_name": "Observable Timing Discrepancy",
+      "found_in_runs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        9
+      ],
+      "total_runs_found": 7,
+      "tools_detected_by": [
+        "bearer"
+      ],
+      "severity_levels": [
+        "MEDIUM"
+      ],
+      "file_counts_per_run": {
+        "run_1": 2,
+        "run_2": 2,
+        "run_3": 1,
+        "run_4": 2,
+        "run_5": 2,
+        "run_8": 1,
+        "run_9": 3
+      },
+      "total_unique_files": 13,
+      "descriptions": [
+        {
+          "tool": "Bearer",
+          "description": "Observable Timing Discrepancy"
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/config/security.ts",
+          "line": 449,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/config/security.ts",
+          "line": 457,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/src/services/authService.ts",
+          "line": 249,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/services/tokenService.ts",
+          "line": 47,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/services/tokenService.ts",
+          "line": 50,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/utils/passwordUtils.ts",
+          "line": 16,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/src/config/auth.config.ts",
+          "line": 21,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/src/config/auth.config.ts",
+          "line": 25,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/backend/utils/passwordUtils.ts",
+          "line": 186,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/src/middleware/security.ts",
+          "line": 128,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/backend/config/index.ts",
+          "line": 156,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/backend/config/security.ts",
+          "line": 590,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/utils/fileValidation.ts",
+          "line": 487,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/src/routes/auth.ts",
+          "line": 114,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/src/utils/passwordUtils.ts",
+          "line": 17,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/src/utils/passwordUtils.ts",
+          "line": 40,
+          "scanner": "bearer",
+          "message": "Observable Timing Discrepancy"
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 1.86,
+        "max_files_in_single_run": 3,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 13
+      }
+    },
+    "CWE-22": {
+      "cwe_id": "CWE-22",
+      "cwe_name": "Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+      "found_in_runs": [
+        1,
+        2,
+        4,
+        6,
+        7,
+        9
+      ],
+      "total_runs_found": 6,
+      "tools_detected_by": [
+        "bearer",
+        "semgrep"
+      ],
+      "severity_levels": [
+        "HIGH"
+      ],
+      "file_counts_per_run": {
+        "run_1": 1,
+        "run_2": 1,
+        "run_4": 2,
+        "run_6": 1,
+        "run_7": 1,
+        "run_9": 1
+      },
+      "total_unique_files": 7,
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        },
+        {
+          "tool": "Bearer",
+          "description": "Unsanitized dynamic input in file path"
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/middleware/upload.ts",
+          "line": 134,
+          "scanner": "semgrep",
+          "message": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/middleware/upload.ts",
+          "line": 142,
+          "scanner": "semgrep",
+          "message": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/middleware/upload.ts",
+          "line": 142,
+          "scanner": "semgrep",
+          "message": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/utils/csvGenerator.ts",
+          "line": 65,
+          "scanner": "semgrep",
+          "message": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/utils/csvGenerator.ts",
+          "line": 65,
+          "scanner": "semgrep",
+          "message": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/utils/csvGenerator.ts",
+          "line": 250,
+          "scanner": "semgrep",
+          "message": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/src/services/imageProcessor.ts",
+          "line": 61,
+          "scanner": "semgrep",
+          "message": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/src/services/imageProcessor.ts",
+          "line": 61,
+          "scanner": "semgrep",
+          "message": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/src/utils/fileValidation.ts",
+          "line": 249,
+          "scanner": "semgrep",
+          "message": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/run_migration.py",
+          "line": 46,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/scripts/performance-analysis.js",
+          "line": 144,
+          "scanner": "semgrep",
+          "message": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/scripts/performance-analysis.js",
+          "line": 144,
+          "scanner": "semgrep",
+          "message": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/scripts/performance-analysis.js",
+          "line": 148,
+          "scanner": "semgrep",
+          "message": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/scripts/performance-report.js",
+          "line": 69,
+          "scanner": "semgrep",
+          "message": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/scripts/performance-report.js",
+          "line": 102,
+          "scanner": "semgrep",
+          "message": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/scripts/performance-report.js",
+          "line": 110,
+          "scanner": "semgrep",
+          "message": "Detected possible user input going into a `path.join` or `path.resolve` function. This could possibly lead to a path traversal vulnerability,  where the attacker can access arbitrary files stored in the file system. Instead, be sure to sanitize or validate user input first."
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 1.17,
+        "max_files_in_single_run": 2,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 7
+      }
+    },
+    "CWE-73": {
+      "cwe_id": "CWE-73",
+      "cwe_name": "External Control of File Name or Path",
+      "found_in_runs": [
+        1,
+        2,
+        4,
+        7,
+        8,
+        9
+      ],
+      "total_runs_found": 6,
+      "tools_detected_by": [
+        "bearer"
+      ],
+      "severity_levels": [
+        "HIGH"
+      ],
+      "file_counts_per_run": {
+        "run_1": 1,
+        "run_2": 1,
+        "run_4": 2,
+        "run_7": 1,
+        "run_8": 1,
+        "run_9": 1
+      },
+      "total_unique_files": 7,
+      "descriptions": [
+        {
+          "tool": "Bearer",
+          "description": "Unsanitized dynamic input in file path"
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/middleware/upload.ts",
+          "line": 24,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/middleware/upload.ts",
+          "line": 25,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/middleware/upload.ts",
+          "line": 155,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/utils/csvGenerator.ts",
+          "line": 386,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/utils/csvGenerator.ts",
+          "line": 387,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/utils/csvGenerator.ts",
+          "line": 445,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/src/services/imageProcessor.ts",
+          "line": 110,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/src/utils/fileValidation.ts",
+          "line": 168,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/src/utils/fileValidation.ts",
+          "line": 180,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/scripts/performance-analysis.js",
+          "line": 141,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/scripts/performance-analysis.js",
+          "line": 145,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/utils/fileValidation.ts",
+          "line": 465,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/scripts/performance-report.js",
+          "line": 31,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/scripts/performance-report.js",
+          "line": 32,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/scripts/performance-report.js",
+          "line": 103,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in file path"
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 1.17,
+        "max_files_in_single_run": 2,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 7
+      }
+    },
+    "CWE-915": {
+      "cwe_id": "CWE-915",
+      "cwe_name": "Improperly Controlled Modification of Dynamically-Determined Object Attributes",
+      "found_in_runs": [
+        1,
+        2,
+        6,
+        7,
+        8,
+        10
+      ],
+      "total_runs_found": 6,
+      "tools_detected_by": [
+        "semgrep"
+      ],
+      "severity_levels": [
+        "INFO"
+      ],
+      "file_counts_per_run": {
+        "run_1": 1,
+        "run_2": 1,
+        "run_6": 1,
+        "run_7": 2,
+        "run_8": 1,
+        "run_10": 1
+      },
+      "total_unique_files": 7,
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "Possibility of prototype polluting function detected. By adding or modifying attributes of an object prototype, it is possible to create attributes that exist on every object, or replace critical attributes with malicious ones. This can be problematic if the software depends on existence or non-existence of certain attributes, or uses pre-defined attributes of object prototype (such as hasOwnProperty, toString or valueOf). Possible mitigations might be: freezing the object prototype, using an object without prototypes (via Object.create(null) ), blocking modifications of attributes that resolve to object prototype, using Map instead of object."
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/services/ruleEvaluator.ts",
+          "line": 84,
+          "scanner": "semgrep",
+          "message": "Possibility of prototype polluting function detected. By adding or modifying attributes of an object prototype, it is possible to create attributes that exist on every object, or replace critical attributes with malicious ones. This can be problematic if the software depends on existence or non-existence of certain attributes, or uses pre-defined attributes of object prototype (such as hasOwnProperty, toString or valueOf). Possible mitigations might be: freezing the object prototype, using an object without prototypes (via Object.create(null) ), blocking modifications of attributes that resolve to object prototype, using Map instead of object."
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/services/ruleEvaluator.ts",
+          "line": 236,
+          "scanner": "semgrep",
+          "message": "Possibility of prototype polluting function detected. By adding or modifying attributes of an object prototype, it is possible to create attributes that exist on every object, or replace critical attributes with malicious ones. This can be problematic if the software depends on existence or non-existence of certain attributes, or uses pre-defined attributes of object prototype (such as hasOwnProperty, toString or valueOf). Possible mitigations might be: freezing the object prototype, using an object without prototypes (via Object.create(null) ), blocking modifications of attributes that resolve to object prototype, using Map instead of object."
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/src/services/ruleEvaluator.ts",
+          "line": 66,
+          "scanner": "semgrep",
+          "message": "Possibility of prototype polluting function detected. By adding or modifying attributes of an object prototype, it is possible to create attributes that exist on every object, or replace critical attributes with malicious ones. This can be problematic if the software depends on existence or non-existence of certain attributes, or uses pre-defined attributes of object prototype (such as hasOwnProperty, toString or valueOf). Possible mitigations might be: freezing the object prototype, using an object without prototypes (via Object.create(null) ), blocking modifications of attributes that resolve to object prototype, using Map instead of object."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/backend/src/services/ruleEvaluator.ts",
+          "line": 256,
+          "scanner": "semgrep",
+          "message": "Possibility of prototype polluting function detected. By adding or modifying attributes of an object prototype, it is possible to create attributes that exist on every object, or replace critical attributes with malicious ones. This can be problematic if the software depends on existence or non-existence of certain attributes, or uses pre-defined attributes of object prototype (such as hasOwnProperty, toString or valueOf). Possible mitigations might be: freezing the object prototype, using an object without prototypes (via Object.create(null) ), blocking modifications of attributes that resolve to object prototype, using Map instead of object."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/config/production.ts",
+          "line": 262,
+          "scanner": "semgrep",
+          "message": "Possibility of prototype polluting function detected. By adding or modifying attributes of an object prototype, it is possible to create attributes that exist on every object, or replace critical attributes with malicious ones. This can be problematic if the software depends on existence or non-existence of certain attributes, or uses pre-defined attributes of object prototype (such as hasOwnProperty, toString or valueOf). Possible mitigations might be: freezing the object prototype, using an object without prototypes (via Object.create(null) ), blocking modifications of attributes that resolve to object prototype, using Map instead of object."
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/services/ruleEvaluator.ts",
+          "line": 377,
+          "scanner": "semgrep",
+          "message": "Possibility of prototype polluting function detected. By adding or modifying attributes of an object prototype, it is possible to create attributes that exist on every object, or replace critical attributes with malicious ones. This can be problematic if the software depends on existence or non-existence of certain attributes, or uses pre-defined attributes of object prototype (such as hasOwnProperty, toString or valueOf). Possible mitigations might be: freezing the object prototype, using an object without prototypes (via Object.create(null) ), blocking modifications of attributes that resolve to object prototype, using Map instead of object."
+        },
+        {
+          "run": 10,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run9/src/services/ruleEvaluationEngine.ts",
+          "line": 127,
+          "scanner": "semgrep",
+          "message": "Possibility of prototype polluting function detected. By adding or modifying attributes of an object prototype, it is possible to create attributes that exist on every object, or replace critical attributes with malicious ones. This can be problematic if the software depends on existence or non-existence of certain attributes, or uses pre-defined attributes of object prototype (such as hasOwnProperty, toString or valueOf). Possible mitigations might be: freezing the object prototype, using an object without prototypes (via Object.create(null) ), blocking modifications of attributes that resolve to object prototype, using Map instead of object."
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 1.17,
+        "max_files_in_single_run": 2,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 7
+      }
+    },
+    "CWE-732": {
+      "cwe_id": "CWE-732",
+      "cwe_name": "Incorrect Permission Assignment for Critical Resource",
+      "found_in_runs": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "total_runs_found": 5,
+      "tools_detected_by": [
+        "semgrep"
+      ],
+      "severity_levels": [
+        "INFO"
+      ],
+      "file_counts_per_run": {
+        "run_3": 1,
+        "run_4": 1,
+        "run_5": 1,
+        "run_6": 2,
+        "run_7": 2
+      },
+      "total_unique_files": 7,
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "Service 'backend' allows for privilege escalation via setuid or setgid binaries. Add 'no-new-privileges:true' in 'security_opt' to prevent this."
+        },
+        {
+          "tool": "Semgrep",
+          "description": "Service 'backend' is running with a writable root filesystem. This may allow malicious applications to download and run additional payloads, or modify container files. If an application inside a container has to save something temporarily consider using a tmpfs. Add 'read_only: true' to this service to prevent this."
+        },
+        {
+          "tool": "Semgrep",
+          "description": "Service 'frontend' allows for privilege escalation via setuid or setgid binaries. Add 'no-new-privileges:true' in 'security_opt' to prevent this."
+        },
+        {
+          "tool": "Semgrep",
+          "description": "Service 'frontend' is running with a writable root filesystem. This may allow malicious applications to download and run additional payloads, or modify container files. If an application inside a container has to save something temporarily consider using a tmpfs. Add 'read_only: true' to this service to prevent this."
+        },
+        {
+          "tool": "Semgrep",
+          "description": "Service 'database' allows for privilege escalation via setuid or setgid binaries. Add 'no-new-privileges:true' in 'security_opt' to prevent this."
+        }
+      ],
+      "examples": [
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/expenseforge/docker-compose.yml",
+          "line": 4,
+          "scanner": "semgrep",
+          "message": "Service 'backend' allows for privilege escalation via setuid or setgid binaries. Add 'no-new-privileges:true' in 'security_opt' to prevent this."
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/expenseforge/docker-compose.yml",
+          "line": 4,
+          "scanner": "semgrep",
+          "message": "Service 'backend' is running with a writable root filesystem. This may allow malicious applications to download and run additional payloads, or modify container files. If an application inside a container has to save something temporarily consider using a tmpfs. Add 'read_only: true' to this service to prevent this."
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/expenseforge/docker-compose.yml",
+          "line": 21,
+          "scanner": "semgrep",
+          "message": "Service 'frontend' allows for privilege escalation via setuid or setgid binaries. Add 'no-new-privileges:true' in 'security_opt' to prevent this."
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/docker-compose.prod.yml",
+          "line": 4,
+          "scanner": "semgrep",
+          "message": "Service 'database' allows for privilege escalation via setuid or setgid binaries. Add 'no-new-privileges:true' in 'security_opt' to prevent this."
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/docker-compose.prod.yml",
+          "line": 4,
+          "scanner": "semgrep",
+          "message": "Service 'database' is running with a writable root filesystem. This may allow malicious applications to download and run additional payloads, or modify container files. If an application inside a container has to save something temporarily consider using a tmpfs. Add 'read_only: true' to this service to prevent this."
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/docker-compose.prod.yml",
+          "line": 22,
+          "scanner": "semgrep",
+          "message": "Service 'backend' allows for privilege escalation via setuid or setgid binaries. Add 'no-new-privileges:true' in 'security_opt' to prevent this."
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/docker-compose.yml",
+          "line": 32,
+          "scanner": "semgrep",
+          "message": "Service 'nginx' allows for privilege escalation via setuid or setgid binaries. Add 'no-new-privileges:true' in 'security_opt' to prevent this."
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/docker-compose.yml",
+          "line": 32,
+          "scanner": "semgrep",
+          "message": "Service 'nginx' is running with a writable root filesystem. This may allow malicious applications to download and run additional payloads, or modify container files. If an application inside a container has to save something temporarily consider using a tmpfs. Add 'read_only: true' to this service to prevent this."
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/docker-compose.prod.yml",
+          "line": 7,
+          "scanner": "semgrep",
+          "message": "Service 'backend' allows for privilege escalation via setuid or setgid binaries. Add 'no-new-privileges:true' in 'security_opt' to prevent this."
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/docker-compose.prod.yml",
+          "line": 7,
+          "scanner": "semgrep",
+          "message": "Service 'backend' is running with a writable root filesystem. This may allow malicious applications to download and run additional payloads, or modify container files. If an application inside a container has to save something temporarily consider using a tmpfs. Add 'read_only: true' to this service to prevent this."
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/docker-compose.prod.yml",
+          "line": 72,
+          "scanner": "semgrep",
+          "message": "Service 'frontend' allows for privilege escalation via setuid or setgid binaries. Add 'no-new-privileges:true' in 'security_opt' to prevent this."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/docker-compose.prod.yml",
+          "line": 5,
+          "scanner": "semgrep",
+          "message": "Service 'nginx' allows for privilege escalation via setuid or setgid binaries. Add 'no-new-privileges:true' in 'security_opt' to prevent this."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/docker-compose.prod.yml",
+          "line": 5,
+          "scanner": "semgrep",
+          "message": "Service 'nginx' is running with a writable root filesystem. This may allow malicious applications to download and run additional payloads, or modify container files. If an application inside a container has to save something temporarily consider using a tmpfs. Add 'read_only: true' to this service to prevent this."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/docker-compose.prod.yml",
+          "line": 83,
+          "scanner": "semgrep",
+          "message": "Service 'redis' allows for privilege escalation via setuid or setgid binaries. Add 'no-new-privileges:true' in 'security_opt' to prevent this."
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 1.4,
+        "max_files_in_single_run": 2,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 7
+      }
+    },
+    "CWE-1333": {
+      "cwe_id": "CWE-1333",
+      "cwe_name": "Inefficient Regular Expression Complexity",
+      "found_in_runs": [
+        1,
+        2,
+        4,
+        7,
+        8
+      ],
+      "total_runs_found": 5,
+      "tools_detected_by": [
+        "bearer",
+        "semgrep"
+      ],
+      "severity_levels": [
+        "INFO",
+        "MEDIUM"
+      ],
+      "file_counts_per_run": {
+        "run_1": 1,
+        "run_2": 1,
+        "run_4": 1,
+        "run_7": 1,
+        "run_8": 1
+      },
+      "total_unique_files": 5,
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "RegExp() called with a `pattern` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+        },
+        {
+          "tool": "Bearer",
+          "description": "Unsanitized dynamic input in regular expression"
+        },
+        {
+          "tool": "Semgrep",
+          "description": "RegExp() called with a `key` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+        },
+        {
+          "tool": "Semgrep",
+          "description": "RegExp() called with a `expectedValue` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/frontend/src/utils/performanceUtils.ts",
+          "line": 61,
+          "scanner": "semgrep",
+          "message": "RegExp() called with a `pattern` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/services/ruleEvaluator.ts",
+          "line": 404,
+          "scanner": "semgrep",
+          "message": "RegExp() called with a `pattern` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+        },
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/services/ruleEvaluator.ts",
+          "line": 404,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in regular expression"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/src/services/notificationService.ts",
+          "line": 191,
+          "scanner": "semgrep",
+          "message": "RegExp() called with a `key` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/src/services/notificationService.ts",
+          "line": 191,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in regular expression"
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/config/security.ts",
+          "line": 351,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in regular expression"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/services/ruleEvaluator.ts",
+          "line": 487,
+          "scanner": "semgrep",
+          "message": "RegExp() called with a `expectedValue` function argument, this might allow an attacker to cause a Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-controlled input, consider performing input validation or use a regex checking/sanitization library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to ReDoS."
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/services/ruleEvaluator.ts",
+          "line": 487,
+          "scanner": "bearer",
+          "message": "Unsanitized dynamic input in regular expression"
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 1.0,
+        "max_files_in_single_run": 1,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 5
+      }
+    },
+    "CWE-444": {
+      "cwe_id": "CWE-444",
+      "cwe_name": "Unknown Vulnerability (CWE-444)",
+      "found_in_runs": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "total_runs_found": 5,
+      "tools_detected_by": [
+        "semgrep"
+      ],
+      "severity_levels": [
+        "INFO"
+      ],
+      "file_counts_per_run": {
+        "run_5": 1,
+        "run_6": 1,
+        "run_7": 1,
+        "run_8": 1,
+        "run_9": 1
+      },
+      "total_unique_files": 5,
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "Conditions for Nginx H2C smuggling identified. H2C smuggling allows upgrading HTTP/1.1 connections to lesser-known HTTP/2 over cleartext (h2c) connections which can allow a bypass of reverse proxy access controls, and lead to long-lived, unrestricted HTTP traffic directly to back-end servers. To mitigate: WebSocket support required: Allow only the value websocket for HTTP/1.1 upgrade headers (e.g., Upgrade: websocket). WebSocket support not required: Do not forward Upgrade headers."
+        }
+      ],
+      "examples": [
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/nginx.conf",
+          "line": 105,
+          "scanner": "semgrep",
+          "message": "Conditions for Nginx H2C smuggling identified. H2C smuggling allows upgrading HTTP/1.1 connections to lesser-known HTTP/2 over cleartext (h2c) connections which can allow a bypass of reverse proxy access controls, and lead to long-lived, unrestricted HTTP traffic directly to back-end servers. To mitigate: WebSocket support required: Allow only the value websocket for HTTP/1.1 upgrade headers (e.g., Upgrade: websocket). WebSocket support not required: Do not forward Upgrade headers."
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/nginx.conf",
+          "line": 130,
+          "scanner": "semgrep",
+          "message": "Conditions for Nginx H2C smuggling identified. H2C smuggling allows upgrading HTTP/1.1 connections to lesser-known HTTP/2 over cleartext (h2c) connections which can allow a bypass of reverse proxy access controls, and lead to long-lived, unrestricted HTTP traffic directly to back-end servers. To mitigate: WebSocket support required: Allow only the value websocket for HTTP/1.1 upgrade headers (e.g., Upgrade: websocket). WebSocket support not required: Do not forward Upgrade headers."
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/nginx.conf",
+          "line": 161,
+          "scanner": "semgrep",
+          "message": "Conditions for Nginx H2C smuggling identified. H2C smuggling allows upgrading HTTP/1.1 connections to lesser-known HTTP/2 over cleartext (h2c) connections which can allow a bypass of reverse proxy access controls, and lead to long-lived, unrestricted HTTP traffic directly to back-end servers. To mitigate: WebSocket support required: Allow only the value websocket for HTTP/1.1 upgrade headers (e.g., Upgrade: websocket). WebSocket support not required: Do not forward Upgrade headers."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/nginx.conf",
+          "line": 119,
+          "scanner": "semgrep",
+          "message": "Conditions for Nginx H2C smuggling identified. H2C smuggling allows upgrading HTTP/1.1 connections to lesser-known HTTP/2 over cleartext (h2c) connections which can allow a bypass of reverse proxy access controls, and lead to long-lived, unrestricted HTTP traffic directly to back-end servers. To mitigate: WebSocket support required: Allow only the value websocket for HTTP/1.1 upgrade headers (e.g., Upgrade: websocket). WebSocket support not required: Do not forward Upgrade headers."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/nginx.conf",
+          "line": 149,
+          "scanner": "semgrep",
+          "message": "Conditions for Nginx H2C smuggling identified. H2C smuggling allows upgrading HTTP/1.1 connections to lesser-known HTTP/2 over cleartext (h2c) connections which can allow a bypass of reverse proxy access controls, and lead to long-lived, unrestricted HTTP traffic directly to back-end servers. To mitigate: WebSocket support required: Allow only the value websocket for HTTP/1.1 upgrade headers (e.g., Upgrade: websocket). WebSocket support not required: Do not forward Upgrade headers."
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/nginx.conf",
+          "line": 110,
+          "scanner": "semgrep",
+          "message": "Conditions for Nginx H2C smuggling identified. H2C smuggling allows upgrading HTTP/1.1 connections to lesser-known HTTP/2 over cleartext (h2c) connections which can allow a bypass of reverse proxy access controls, and lead to long-lived, unrestricted HTTP traffic directly to back-end servers. To mitigate: WebSocket support required: Allow only the value websocket for HTTP/1.1 upgrade headers (e.g., Upgrade: websocket). WebSocket support not required: Do not forward Upgrade headers."
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/nginx.conf",
+          "line": 139,
+          "scanner": "semgrep",
+          "message": "Conditions for Nginx H2C smuggling identified. H2C smuggling allows upgrading HTTP/1.1 connections to lesser-known HTTP/2 over cleartext (h2c) connections which can allow a bypass of reverse proxy access controls, and lead to long-lived, unrestricted HTTP traffic directly to back-end servers. To mitigate: WebSocket support required: Allow only the value websocket for HTTP/1.1 upgrade headers (e.g., Upgrade: websocket). WebSocket support not required: Do not forward Upgrade headers."
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/nginx.conf",
+          "line": 165,
+          "scanner": "semgrep",
+          "message": "Conditions for Nginx H2C smuggling identified. H2C smuggling allows upgrading HTTP/1.1 connections to lesser-known HTTP/2 over cleartext (h2c) connections which can allow a bypass of reverse proxy access controls, and lead to long-lived, unrestricted HTTP traffic directly to back-end servers. To mitigate: WebSocket support required: Allow only the value websocket for HTTP/1.1 upgrade headers (e.g., Upgrade: websocket). WebSocket support not required: Do not forward Upgrade headers."
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/nginx.conf",
+          "line": 122,
+          "scanner": "semgrep",
+          "message": "Conditions for Nginx H2C smuggling identified. H2C smuggling allows upgrading HTTP/1.1 connections to lesser-known HTTP/2 over cleartext (h2c) connections which can allow a bypass of reverse proxy access controls, and lead to long-lived, unrestricted HTTP traffic directly to back-end servers. To mitigate: WebSocket support required: Allow only the value websocket for HTTP/1.1 upgrade headers (e.g., Upgrade: websocket). WebSocket support not required: Do not forward Upgrade headers."
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/nginx.conf",
+          "line": 234,
+          "scanner": "semgrep",
+          "message": "Conditions for Nginx H2C smuggling identified. H2C smuggling allows upgrading HTTP/1.1 connections to lesser-known HTTP/2 over cleartext (h2c) connections which can allow a bypass of reverse proxy access controls, and lead to long-lived, unrestricted HTTP traffic directly to back-end servers. To mitigate: WebSocket support required: Allow only the value websocket for HTTP/1.1 upgrade headers (e.g., Upgrade: websocket). WebSocket support not required: Do not forward Upgrade headers."
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 1.0,
+        "max_files_in_single_run": 1,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 5
+      }
+    },
+    "CWE-117": {
+      "cwe_id": "CWE-117",
+      "cwe_name": "Improper Output Neutralization for Logs",
+      "found_in_runs": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "total_runs_found": 4,
+      "tools_detected_by": [
+        "semgrep"
+      ],
+      "severity_levels": [
+        "INFO"
+      ],
+      "file_counts_per_run": {
+        "run_6": 1,
+        "run_7": 1,
+        "run_8": 2,
+        "run_9": 1
+      },
+      "total_unique_files": 5,
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "Detected a logger that logs user input without properly neutralizing the output. The log message could contain characters like ` ` and ` ` and cause an attacker to forge log entries or include malicious content into the logs. Use proper input validation and/or output encoding to prevent log entries from being forged."
+        }
+      ],
+      "examples": [
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/backend/middleware/logger.ts",
+          "line": 172,
+          "scanner": "semgrep",
+          "message": "Detected a logger that logs user input without properly neutralizing the output. The log message could contain characters like ` ` and ` ` and cause an attacker to forge log entries or include malicious content into the logs. Use proper input validation and/or output encoding to prevent log entries from being forged."
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/backend/middleware/logger.ts",
+          "line": 180,
+          "scanner": "semgrep",
+          "message": "Detected a logger that logs user input without properly neutralizing the output. The log message could contain characters like ` ` and ` ` and cause an attacker to forge log entries or include malicious content into the logs. Use proper input validation and/or output encoding to prevent log entries from being forged."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/scripts/database-performance.js",
+          "line": 71,
+          "scanner": "semgrep",
+          "message": "Detected a logger that logs user input without properly neutralizing the output. The log message could contain characters like ` ` and ` ` and cause an attacker to forge log entries or include malicious content into the logs. Use proper input validation and/or output encoding to prevent log entries from being forged."
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/middleware/errorHandler.ts",
+          "line": 122,
+          "scanner": "semgrep",
+          "message": "Detected a logger that logs user input without properly neutralizing the output. The log message could contain characters like ` ` and ` ` and cause an attacker to forge log entries or include malicious content into the logs. Use proper input validation and/or output encoding to prevent log entries from being forged."
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/middleware/errorHandler.ts",
+          "line": 164,
+          "scanner": "semgrep",
+          "message": "Detected a logger that logs user input without properly neutralizing the output. The log message could contain characters like ` ` and ` ` and cause an attacker to forge log entries or include malicious content into the logs. Use proper input validation and/or output encoding to prevent log entries from being forged."
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/middleware/errorHandler.ts",
+          "line": 353,
+          "scanner": "semgrep",
+          "message": "Detected a logger that logs user input without properly neutralizing the output. The log message could contain characters like ` ` and ` ` and cause an attacker to forge log entries or include malicious content into the logs. Use proper input validation and/or output encoding to prevent log entries from being forged."
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/middleware/logger.ts",
+          "line": 138,
+          "scanner": "semgrep",
+          "message": "Detected a logger that logs user input without properly neutralizing the output. The log message could contain characters like ` ` and ` ` and cause an attacker to forge log entries or include malicious content into the logs. Use proper input validation and/or output encoding to prevent log entries from being forged."
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/middleware/logger.ts",
+          "line": 146,
+          "scanner": "semgrep",
+          "message": "Detected a logger that logs user input without properly neutralizing the output. The log message could contain characters like ` ` and ` ` and cause an attacker to forge log entries or include malicious content into the logs. Use proper input validation and/or output encoding to prevent log entries from being forged."
+        },
+        {
+          "run": 9,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run8/backend/middleware/logger.ts",
+          "line": 148,
+          "scanner": "semgrep",
+          "message": "Detected a logger that logs user input without properly neutralizing the output. The log message could contain characters like ` ` and ` ` and cause an attacker to forge log entries or include malicious content into the logs. Use proper input validation and/or output encoding to prevent log entries from being forged."
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 1.25,
+        "max_files_in_single_run": 2,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 5
+      }
+    },
+    "CWE-346": {
+      "cwe_id": "CWE-346",
+      "cwe_name": "Unknown Vulnerability (CWE-346)",
+      "found_in_runs": [
+        1,
+        4,
+        5,
+        8
+      ],
+      "total_runs_found": 4,
+      "tools_detected_by": [
+        "bearer",
+        "semgrep"
+      ],
+      "severity_levels": [
+        "MEDIUM"
+      ],
+      "file_counts_per_run": {
+        "run_1": 1,
+        "run_4": 1,
+        "run_5": 1,
+        "run_8": 1
+      },
+      "total_unique_files": 4,
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "By letting user input control CORS parameters, there is a risk that software does not properly verify that the source of data or communication is valid. Use literal values for CORS settings."
+        },
+        {
+          "tool": "Bearer",
+          "description": "Unsanitized user input in Access-Control-Allow-Origin"
+        }
+      ],
+      "examples": [
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/middleware/security/helmet.middleware.ts",
+          "line": 135,
+          "scanner": "semgrep",
+          "message": "By letting user input control CORS parameters, there is a risk that software does not properly verify that the source of data or communication is valid. Use literal values for CORS settings."
+        },
+        {
+          "run": 1,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run0/backend/src/middleware/security/helmet.middleware.ts",
+          "line": 135,
+          "scanner": "bearer",
+          "message": "Unsanitized user input in Access-Control-Allow-Origin"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/src/middleware/security.ts",
+          "line": 89,
+          "scanner": "semgrep",
+          "message": "By letting user input control CORS parameters, there is a risk that software does not properly verify that the source of data or communication is valid. Use literal values for CORS settings."
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/src/middleware/security.ts",
+          "line": 89,
+          "scanner": "bearer",
+          "message": "Unsanitized user input in Access-Control-Allow-Origin"
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/backend/middleware/security.ts",
+          "line": 72,
+          "scanner": "semgrep",
+          "message": "By letting user input control CORS parameters, there is a risk that software does not properly verify that the source of data or communication is valid. Use literal values for CORS settings."
+        },
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/backend/middleware/security.ts",
+          "line": 72,
+          "scanner": "bearer",
+          "message": "Unsanitized user input in Access-Control-Allow-Origin"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/middleware/security.ts",
+          "line": 146,
+          "scanner": "semgrep",
+          "message": "By letting user input control CORS parameters, there is a risk that software does not properly verify that the source of data or communication is valid. Use literal values for CORS settings."
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/backend/src/middleware/security.ts",
+          "line": 146,
+          "scanner": "bearer",
+          "message": "Unsanitized user input in Access-Control-Allow-Origin"
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 1.0,
+        "max_files_in_single_run": 1,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 4
+      }
+    },
+    "CWE-352": {
+      "cwe_id": "CWE-352",
+      "cwe_name": "Cross-Site Request Forgery (CSRF)",
+      "found_in_runs": [
+        2,
+        3
+      ],
+      "total_runs_found": 2,
+      "tools_detected_by": [
+        "semgrep"
+      ],
+      "severity_levels": [
+        "INFO"
+      ],
+      "file_counts_per_run": {
+        "run_2": 1,
+        "run_3": 1
+      },
+      "total_unique_files": 2,
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "A CSRF middleware was not detected in your express application. Ensure you are either using one such as `csurf` or `csrf` (see rule references) and/or you are properly doing CSRF validation in your routes with a token or cookies."
+        }
+      ],
+      "examples": [
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/INTEGRATION_GUIDE.js",
+          "line": 9,
+          "scanner": "semgrep",
+          "message": "A CSRF middleware was not detected in your express application. Ensure you are either using one such as `csurf` or `csrf` (see rule references) and/or you are properly doing CSRF validation in your routes with a token or cookies."
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/app.js",
+          "line": 7,
+          "scanner": "semgrep",
+          "message": "A CSRF middleware was not detected in your express application. Ensure you are either using one such as `csurf` or `csrf` (see rule references) and/or you are properly doing CSRF validation in your routes with a token or cookies."
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 1.0,
+        "max_files_in_single_run": 1,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 2
+      }
+    },
+    "CWE-601": {
+      "cwe_id": "CWE-601",
+      "cwe_name": "URL Redirection to Untrusted Site ('Open Redirect')",
+      "found_in_runs": [
+        2,
+        3
+      ],
+      "total_runs_found": 2,
+      "tools_detected_by": [
+        "semgrep"
+      ],
+      "severity_levels": [
+        "INFO"
+      ],
+      "file_counts_per_run": {
+        "run_2": 1,
+        "run_3": 1
+      },
+      "total_unique_files": 2,
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "The application builds a URL using user-controlled input which can lead to an open redirect vulnerability. An attacker can manipulate the URL and redirect users to an arbitrary domain. Open redirect vulnerabilities can lead to issues such as Cross-site scripting (XSS) or redirecting to a malicious domain for activities such as phishing to capture users' credentials. To prevent this vulnerability perform strict input validation of the domain against an allowlist of approved domains. Notify a user in your application that they are leaving the website. Display a domain where they are redirected to the user. A user can then either accept or deny the redirect to an untrusted site."
+        }
+      ],
+      "examples": [
+        {
+          "run": 2,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run1/backend/src/middleware/security.ts",
+          "line": 117,
+          "scanner": "semgrep",
+          "message": "The application builds a URL using user-controlled input which can lead to an open redirect vulnerability. An attacker can manipulate the URL and redirect users to an arbitrary domain. Open redirect vulnerabilities can lead to issues such as Cross-site scripting (XSS) or redirecting to a malicious domain for activities such as phishing to capture users' credentials. To prevent this vulnerability perform strict input validation of the domain against an allowlist of approved domains. Notify a user in your application that they are leaving the website. Display a domain where they are redirected to the user. A user can then either accept or deny the redirect to an untrusted site."
+        },
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/frontend/src/examples/SecurityComponentsUsage.tsx",
+          "line": 75,
+          "scanner": "semgrep",
+          "message": "The application builds a URL using user-controlled input which can lead to an open redirect vulnerability. An attacker can manipulate the URL and redirect users to an arbitrary domain. Open redirect vulnerabilities can lead to issues such as Cross-site scripting (XSS) or redirecting to a malicious domain for activities such as phishing to capture users' credentials. To prevent this vulnerability perform strict input validation of the domain against an allowlist of approved domains. Notify a user in your application that they are leaving the website. Display a domain where they are redirected to the user. A user can then either accept or deny the redirect to an untrusted site."
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 1.0,
+        "max_files_in_single_run": 1,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 2
+      }
+    },
+    "CWE-79": {
+      "cwe_id": "CWE-79",
+      "cwe_name": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')",
+      "found_in_runs": [
+        3,
+        8
+      ],
+      "total_runs_found": 2,
+      "tools_detected_by": [
+        "bearer"
+      ],
+      "severity_levels": [
+        "HIGH"
+      ],
+      "file_counts_per_run": {
+        "run_3": 1,
+        "run_8": 1
+      },
+      "total_unique_files": 2,
+      "descriptions": [
+        {
+          "tool": "Bearer",
+          "description": "Usage of manual HTML sanitization (XSS)"
+        },
+        {
+          "tool": "Bearer",
+          "description": "Unsanitized user input in HTTP response (XSS)"
+        }
+      ],
+      "examples": [
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/src/utils/validation.ts",
+          "line": 59,
+          "scanner": "bearer",
+          "message": "Usage of manual HTML sanitization (XSS)"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/controllers/reportController.js",
+          "line": 342,
+          "scanner": "bearer",
+          "message": "Unsanitized user input in HTTP response (XSS)"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/controllers/reportController.js",
+          "line": 374,
+          "scanner": "bearer",
+          "message": "Unsanitized user input in HTTP response (XSS)"
+        },
+        {
+          "run": 8,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run7/controllers/reportController.js",
+          "line": 406,
+          "scanner": "bearer",
+          "message": "Unsanitized user input in HTTP response (XSS)"
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 1.0,
+        "max_files_in_single_run": 1,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 2
+      }
+    },
+    "CWE-353": {
+      "cwe_id": "CWE-353",
+      "cwe_name": "Missing Support for Integrity Check",
+      "found_in_runs": [
+        5,
+        6
+      ],
+      "total_runs_found": 2,
+      "tools_detected_by": [
+        "semgrep"
+      ],
+      "severity_levels": [
+        "INFO"
+      ],
+      "file_counts_per_run": {
+        "run_5": 1,
+        "run_6": 1
+      },
+      "total_unique_files": 2,
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "This tag is missing an 'integrity' subresource integrity attribute. The 'integrity' attribute allows for the browser to verify that externally hosted files (for example from a CDN) are delivered without unexpected manipulation. Without this attribute, if an attacker can modify the externally hosted resource, this could lead to XSS and other types of attacks. To prevent this, include the base64-encoded cryptographic hash of the resource (file) you’re telling the browser to fetch in the 'integrity' attribute for all externally hosted files."
+        }
+      ],
+      "examples": [
+        {
+          "run": 5,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run4/public/index.html",
+          "line": 43,
+          "scanner": "semgrep",
+          "message": "This tag is missing an 'integrity' subresource integrity attribute. The 'integrity' attribute allows for the browser to verify that externally hosted files (for example from a CDN) are delivered without unexpected manipulation. Without this attribute, if an attacker can modify the externally hosted resource, this could lead to XSS and other types of attacks. To prevent this, include the base64-encoded cryptographic hash of the resource (file) you’re telling the browser to fetch in the 'integrity' attribute for all externally hosted files."
+        },
+        {
+          "run": 6,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run5/public/index.html",
+          "line": 56,
+          "scanner": "semgrep",
+          "message": "This tag is missing an 'integrity' subresource integrity attribute. The 'integrity' attribute allows for the browser to verify that externally hosted files (for example from a CDN) are delivered without unexpected manipulation. Without this attribute, if an attacker can modify the externally hosted resource, this could lead to XSS and other types of attacks. To prevent this, include the base64-encoded cryptographic hash of the resource (file) you’re telling the browser to fetch in the 'integrity' attribute for all externally hosted files."
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 1.0,
+        "max_files_in_single_run": 1,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 2
+      }
+    },
+    "CWE-319": {
+      "cwe_id": "CWE-319",
+      "cwe_name": "Cleartext Transmission of Sensitive Information",
+      "found_in_runs": [
+        7
+      ],
+      "total_runs_found": 1,
+      "tools_detected_by": [
+        "semgrep"
+      ],
+      "severity_levels": [
+        "INFO"
+      ],
+      "file_counts_per_run": {
+        "run_7": 3
+      },
+      "total_unique_files": 3,
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "Insecure WebSocket Detected. WebSocket Secure (wss) should be used for all WebSocket connections."
+        }
+      ],
+      "examples": [
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/.history/coder-Running_subtask_for_callingAgent=supervisor,_conversationPurpose=Phase_4_code)__basic_notification_component.txt",
+          "line": 421,
+          "scanner": "semgrep",
+          "message": "Insecure WebSocket Detected. WebSocket Secure (wss) should be used for all WebSocket connections."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/.history/memory-coder-Running_subtask_for_callingAgent_supervisor__conversationPurpose_Phase_4_code___basic_notification_component.json",
+          "line": 835,
+          "scanner": "semgrep",
+          "message": "Insecure WebSocket Detected. WebSocket Secure (wss) should be used for all WebSocket connections."
+        },
+        {
+          "run": 7,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run6/NOTIFICATION_PANEL_INTEGRATION.md",
+          "line": 150,
+          "scanner": "semgrep",
+          "message": "Insecure WebSocket Detected. WebSocket Secure (wss) should be used for all WebSocket connections."
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 3.0,
+        "max_files_in_single_run": 3,
+        "min_files_in_single_run": 3,
+        "total_instances_across_runs": 3
+      }
+    },
+    "CWE-522": {
+      "cwe_id": "CWE-522",
+      "cwe_name": "Unknown Vulnerability (CWE-522)",
+      "found_in_runs": [
+        3
+      ],
+      "total_runs_found": 1,
+      "tools_detected_by": [
+        "semgrep"
+      ],
+      "severity_levels": [
+        "INFO"
+      ],
+      "file_counts_per_run": {
+        "run_3": 1
+      },
+      "total_unique_files": 1,
+      "descriptions": [
+        {
+          "tool": "Semgrep",
+          "description": "Bracket object notation with user input is present, this might allow an attacker to access all properties of the object and even it's prototype. Use literal values for object properties."
+        }
+      ],
+      "examples": [
+        {
+          "run": 3,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run2/backend/middleware/requestOptimization.ts",
+          "line": 63,
+          "scanner": "semgrep",
+          "message": "Bracket object notation with user input is present, this might allow an attacker to access all properties of the object and even it's prototype. Use literal values for object properties."
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 1.0,
+        "max_files_in_single_run": 1,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 1
+      }
+    },
+    "CWE-312": {
+      "cwe_id": "CWE-312",
+      "cwe_name": "Cleartext Storage of Sensitive Information",
+      "found_in_runs": [
+        4
+      ],
+      "total_runs_found": 1,
+      "tools_detected_by": [
+        "bearer"
+      ],
+      "severity_levels": [
+        "HIGH"
+      ],
+      "file_counts_per_run": {
+        "run_4": 1
+      },
+      "total_unique_files": 1,
+      "descriptions": [
+        {
+          "tool": "Bearer",
+          "description": "Leakage of sensitive data in JWT"
+        }
+      ],
+      "examples": [
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/backend/services/tokenService.ts",
+          "line": 39,
+          "scanner": "bearer",
+          "message": "Leakage of sensitive data in JWT"
+        },
+        {
+          "run": 4,
+          "file": "sonnet-4.5-nonreasoning_javascript-react_run3/backend/services/tokenService.ts",
+          "line": 58,
+          "scanner": "bearer",
+          "message": "Leakage of sensitive data in JWT"
+        }
+      ],
+      "statistics": {
+        "average_files_per_run": 1.0,
+        "max_files_in_single_run": 1,
+        "min_files_in_single_run": 1,
+        "total_instances_across_runs": 1
+      }
+    }
+  },
+  "total_unique_cwes": 22
+}

@@ -20,11 +20,14 @@ def _run_cmd_to_file(cmd, cwd: Path, outfile: Optional[Path]):
             cwd=str(cwd),
             capture_output=True,
             text=True,
-            timeout=300,
+            timeout=600,  # 10 minutes (increased from 5)
             check=False,
         )
     except FileNotFoundError as e:
         print(f"[ERROR] Command not found: {cmd[0]} – {e}")
+        return None
+    except subprocess.TimeoutExpired:
+        print(f"[WARN] {cmd[0]} timed out after 600 seconds - skipping")
         return None
 
     if proc.stdout and outfile is not None:
@@ -51,11 +54,14 @@ def _run_cmd_capture(cmd, cwd: Path):
             cwd=str(cwd),
             capture_output=True,
             text=True,
-            timeout=300,
+            timeout=600,  # 10 minutes (increased from 5)
             check=False,
         )
     except FileNotFoundError as e:
         print(f"[ERROR] Command not found: {cmd[0]} – {e}")
+        return None, ""
+    except subprocess.TimeoutExpired:
+        print(f"[WARN] {cmd[0]} timed out after 600 seconds - skipping")
         return None, ""
 
     if proc.stdout:

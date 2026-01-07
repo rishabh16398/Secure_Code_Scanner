@@ -764,10 +764,18 @@ def scan_projects_background(files_info, clear_previous, scan_id):
                 })
 
             except Exception as e:
-                queue.put({
-                    "type": "error",
-                    "message": f"[{idx}/{total_files}] ❌ Error scanning {filename}: {str(e)}"
-                })
+                error_msg = str(e)
+                # Make timeout errors clearer
+                if "timed out after" in error_msg:
+                    queue.put({
+                        "type": "status",
+                        "message": f"[{idx}/{total_files}] ⏱️  {filename}: A scanner timed out (>10 min) - continuing with other scanners"
+                    })
+                else:
+                    queue.put({
+                        "type": "error",
+                        "message": f"[{idx}/{total_files}] ❌ Error scanning {filename}: {error_msg}"
+                    })
 
             finally:
                 # Clean up temp extraction directory
@@ -892,23 +900,28 @@ def progress_stream(scan_id):
             yield f"data: {json.dumps({'type': 'error', 'message': 'Invalid scan ID'})}\n\n"
             return
         
-        while True:
-            try:
-                # Get update from queue (timeout after 30 seconds)
-                update = queue.get(timeout=30)
-                yield f"data: {json.dumps(update)}\n\n"
-                
-                # If complete or error, clean up and stop
-                if update.get("type") in ["complete", "error"]:
-                    # Clean up queue after a delay
-                    time.sleep(2)
-                    if scan_id in progress_queues:
-                        del progress_queues[scan_id]
-                    break
+        try:
+            while True:
+                try:
+                    # Get update from queue (timeout after 30 seconds)
+                    update = queue.get(timeout=30)
+                    yield f"data: {json.dumps(update)}\n\n"
                     
-            except:
-                # Timeout or error - send keepalive
-                yield f"data: {json.dumps({'type': 'keepalive'})}\n\n"
+                    # If complete or error, clean up and stop
+                    if update.get("type") in ["complete", "error"]:
+                        # Clean up queue after a delay
+                        time.sleep(2)
+                        if scan_id in progress_queues:
+                            del progress_queues[scan_id]
+                        break
+                        
+                except Exception as e:
+                    # Timeout or error - send keepalive
+                    yield f"data: {json.dumps({'type': 'keepalive'})}\n\n"
+        except GeneratorExit:
+            # Client disconnected - clean up silently
+            if scan_id in progress_queues:
+                del progress_queues[scan_id]
     
     return Response(stream_with_context(generate()), mimetype="text/event-stream")
 
