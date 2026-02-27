@@ -155,6 +155,21 @@
     <div id="calc-details"></div>
   </div>
 
+  <!-- Clustermap -->
+  <div class="comp-card" style="overflow-x:auto;">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <div class="section-title mb-0">🧬 Vulnerability Clustermap — Models × CWEs</div>
+      <select id="clusterSort" onchange="renderClustermap()" style="background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:6px;padding:2px 8px;font-size:0.78rem;">
+        <option value="cluster">Clustered</option><option value="severity">By Severity</option><option value="name">By CWE ID</option>
+      </select>
+    </div>
+    <div id="clustermap-container"></div>
+    <div class="d-flex justify-content-between mt-2">
+      <div class="d-flex align-items-center gap-2"><small style="color:#64748b;">Score:</small><div style="width:80px;height:10px;border-radius:2px;background:linear-gradient(to right,#0f172a,#1e3a5f,#0ea5e9,#f59e0b,#ef4444,#dc2626);"></div><small style="color:#64748b;">0→100</small></div>
+      <small style="color:#475569;">Dark grey = not present</small>
+    </div>
+  </div>
+
   <!-- Rankings Table -->
   <div class="card-panel">
     <div class="section-title">📋 Full Comparison Table <small style="color:#a1a1aa;font-weight:400;">— sorted by Σ Risk² ascending (most secure first)</small></div>
@@ -242,6 +257,7 @@ function render(){
   fillTable(M);
   fillCalcDetails(M);
   fillPercentiles(P);
+  renderClustermap();
 }
 
 // ── HORIZONTAL BAR (generic) ─────────────────────────────────
@@ -257,7 +273,8 @@ function drawHBar(canvasId, wrapId, M, field, label, color, descSort){
     data:{labels:labels,datasets:[{label:label,data:vals,backgroundColor:color+'88',borderColor:color,borderWidth:1.5,borderRadius:5,barPercentage:0.65}]},
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,animation:{duration:500},
       plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){var m=S[c.dataIndex];return label+': '+m[field]+'  |  CWEs: '+m.num_cwes+'  |  TP: '+m.total_tp;}}}},
-      scales:{x:{grid:{color:'rgba(148,163,184,0.08)'},ticks:{color:'#a1a1aa',font:{size:10}}},y:{grid:{display:false},ticks:{color:'#e2e8f0',font:{size:11}}}}}
+      scales:{x:{grid:{color:'rgba(148,163,184,0.08)'},ticks:{color:'#a1a1aa',font:{size:10}}},y:{grid:{display:false},ticks:{color:'#e2e8f0',font:{size:11}}}},
+      onClick:function(e,el){if(el.length)openCweModal(S[el[0].index]);}}
   });
 }
 
@@ -276,7 +293,8 @@ function drawTpFp(M){
     ]},
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,animation:{duration:500},
       plugins:{legend:{position:'top',labels:{color:'#a1a1aa',font:{size:10},boxWidth:10}}},
-      scales:{x:{stacked:true,grid:{color:'rgba(148,163,184,0.08)'},ticks:{color:'#a1a1aa',font:{size:10}}},y:{stacked:true,grid:{display:false},ticks:{color:'#e2e8f0',font:{size:11}}}}}
+      scales:{x:{stacked:true,grid:{color:'rgba(148,163,184,0.08)'},ticks:{color:'#a1a1aa',font:{size:10}}},y:{stacked:true,grid:{display:false},ticks:{color:'#e2e8f0',font:{size:11}}}},
+      onClick:function(e,el){if(el.length)openCweModal(S[el[0].index]);}}
   });
 }
 
@@ -429,5 +447,61 @@ function fillPercentiles(P){
 }
 
 document.addEventListener('DOMContentLoaded',function(){fetchData('all');});
+
+// ── CLUSTERMAP ──────────────────────────────────────────────
+function riskCol(s){if(s<=0)return'#0f172a';if(s<10)return'#1e3a5f';if(s<20)return'#0c4a6e';if(s<35)return'#0e7490';if(s<50)return'#0ea5e9';if(s<65)return'#f59e0b';if(s<80)return'#ef4444';return'#dc2626';}
+function nnOrder(distFn,n){if(n<=1)return[0];var vis=new Uint8Array(n),ord=[0];vis[0]=1;for(var s=1;s<n;s++){var last=ord[ord.length-1],best=-1,bd=1e18;for(var k=0;k<n;k++){if(!vis[k]){var d=distFn(last,k);if(d<bd){bd=d;best=k;}}}ord.push(best);vis[best]=1;}return ord;}
+function sn(n){return n.length>28?n.substring(0,25)+'...':n;}
+
+function renderClustermap(){
+  if(!DATA||!DATA.models||!DATA.models.length)return;
+  var el=document.getElementById('clustermap-container'),m=DATA.models,cwes={};
+  m.forEach(function(x){(x.cwe_details||[]).forEach(function(c){if(!cwes[c.cwe_id])cwes[c.cwe_id]={t:0,n:0};cwes[c.cwe_id].t+=c.risk_score;cwes[c.cwe_id].n++;});});
+  var cl=Object.keys(cwes);
+  if(!cl.length){el.innerHTML='<p class="text-muted small">No CWE data available</p>';return;}
+  var mx=m.map(function(x){var r={};(x.cwe_details||[]).forEach(function(c){r[c.cwe_id]=c.risk_score;});return cl.map(function(c){return r[c]!==undefined?r[c]:-1;});});
+  var sort=document.getElementById('clusterSort').value,cOrd;
+  if(sort==='cluster'){cOrd=nnOrder(function(a,b){var d=0;for(var i=0;i<m.length;i++){var va=mx[i][a]<0?0:mx[i][a],vb=mx[i][b]<0?0:mx[i][b];d+=(va-vb)*(va-vb);}return d;},cl.length);}
+  else if(sort==='severity'){cOrd=cl.map(function(_,i){return i;}).sort(function(a,b){return(cwes[cl[b]].t/cwes[cl[b]].n)-(cwes[cl[a]].t/cwes[cl[a]].n);});}
+  else{cOrd=cl.map(function(_,i){return i;}).sort(function(a,b){return cl[a].localeCompare(cl[b]);});}
+  var rOrd=nnOrder(function(a,b){var d=0;for(var j=0;j<cl.length;j++){var va=mx[a][j]<0?0:mx[a][j],vb=mx[b][j]<0?0:mx[b][j];d+=(va-vb)*(va-vb);}return d;},m.length);
+  var cw=Math.max(24,Math.min(44,Math.floor((el.clientWidth-200)/cOrd.length)));
+  var h='<table style="border-collapse:collapse;"><tr><td style="min-width:180px;"></td>';
+  cOrd.forEach(function(ci){h+='<td style="width:'+cw+'px;text-align:center;padding:1px;"><div style="writing-mode:vertical-lr;transform:rotate(180deg);height:55px;display:flex;align-items:center;color:#94a3b8;font-size:0.55rem;">'+cl[ci]+'</div></td>';});
+  h+='</tr>';
+  rOrd.forEach(function(mi){var x=m[mi],row=mx[mi];h+='<tr><td style="padding:3px 6px;color:#e2e8f0;font-size:0.68rem;white-space:nowrap;font-weight:600;max-width:180px;overflow:hidden;text-overflow:ellipsis;cursor:pointer;" title="'+x.name+'" onclick="openCweModal(DATA.models['+mi+'])">'+sn(x.name)+'</td>';cOrd.forEach(function(ci){var v=row[ci],bg=v<0?'#1a1f2e':riskCol(v);h+='<td style="width:'+cw+'px;height:24px;background:'+bg+';text-align:center;color:#fff;font-size:0.52rem;font-weight:600;border:1px solid #0f172a;" title="'+x.name+' | '+cl[ci]+': '+(v<0?'N/A':v.toFixed(2))+'">'+(v>=0&&cw>=34?v.toFixed(1):'')+'</td>';});h+='</tr>';});
+  el.innerHTML=h+'</table>';
+}
+
+// ── CWE DETAIL MODAL ────────────────────────────────────────
+function openCweModal(x){
+  document.getElementById('mTitle').textContent=x.name;
+  document.getElementById('mSub').textContent=x.num_cwes+' CWEs | Σ Risk: '+x.sum_risk+' | TP Rate: '+x.tp_rate+'%';
+  var cw=x.cwe_details||[];
+  if(!cw.length){document.getElementById('mBody').innerHTML='<p style="color:#94a3b8;">No CWE data for this model.</p>';document.getElementById('cweModal').style.display='block';return;}
+  var lc={'CRITICAL':'#dc2626','HIGH':'#ef4444','MEDIUM':'#f59e0b','LOW':'#3b82f6','MINIMAL':'#22c55e'};
+  var h='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;">';
+  h+=msc('CWEs',x.num_cwes,'#6366f1')+msc('Σ Risk',x.sum_risk,'#ef4444')+msc('Max',x.max_risk,'#f59e0b')+msc('Avg',x.avg_risk,'#22c55e');
+  h+='</div><div style="max-height:400px;overflow-y:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.78rem;">';
+  h+='<thead><tr style="border-bottom:2px solid #334155;"><th style="padding:6px;color:#94a3b8;">CWE</th><th style="padding:6px;color:#94a3b8;text-align:center;">Score</th><th style="padding:6px;color:#94a3b8;">Level</th><th style="padding:6px;color:#94a3b8;text-align:center;">TPs</th><th style="padding:6px;color:#94a3b8;text-align:center;">Runs</th><th style="padding:6px;color:#94a3b8;text-align:center;">Tools</th><th style="padding:6px;color:#94a3b8;">Bar</th></tr></thead><tbody>';
+  cw.forEach(function(c,i){var cl2=lc[c.risk_level]||'#94a3b8',bg=i%2?'background:rgba(30,41,59,0.4);':'';h+='<tr style="border-bottom:1px solid #1e293b;'+bg+'"><td style="padding:6px;color:#e2e8f0;font-weight:600;">'+c.cwe_id+'</td><td style="padding:6px;text-align:center;color:'+cl2+';font-weight:700;">'+c.risk_score+'</td><td style="padding:6px;"><span style="color:'+cl2+';font-size:0.65rem;font-weight:600;padding:2px 6px;border:1px solid '+cl2+';border-radius:8px;">'+c.risk_level+'</span></td><td style="padding:6px;text-align:center;">'+c.tp_count+'</td><td style="padding:6px;text-align:center;color:#94a3b8;">'+c.runs_count+'</td><td style="padding:6px;text-align:center;color:#94a3b8;">'+c.tools_count+'</td><td style="padding:6px;width:100px;"><div style="width:100%;background:#1e293b;border-radius:3px;height:12px;overflow:hidden;"><div style="width:'+Math.min(c.risk_score,100)+'%;height:100%;background:'+cl2+';border-radius:3px;"></div></div></td></tr>';});
+  h+='</tbody></table></div>';
+  document.getElementById('mBody').innerHTML=h;
+  document.getElementById('cweModal').style.display='block';document.body.style.overflow='hidden';
+}
+function msc(l,v,c){return'<div style="background:#1e293b;border-radius:8px;padding:10px;text-align:center;"><div style="color:'+c+';font-size:1.2rem;font-weight:700;">'+v+'</div><div style="color:#64748b;font-size:0.68rem;">'+l+'</div></div>';}
+function closeCweModal(){document.getElementById('cweModal').style.display='none';document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeCweModal();});
 </script>
+
+<!-- CWE Detail Modal -->
+<div id="cweModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);overflow-y:auto;" onclick="if(event.target===this)closeCweModal()">
+  <div style="max-width:780px;margin:40px auto;background:#0f172a;border:1px solid rgba(99,102,241,0.3);border-radius:14px;box-shadow:0 25px 50px rgba(0,0,0,0.5);">
+    <div style="padding:16px 20px;border-bottom:1px solid rgba(148,163,184,0.1);display:flex;justify-content:space-between;align-items:center;">
+      <div><h5 id="mTitle" style="color:#c4b5fd;margin:0;font-size:1rem;"></h5><small id="mSub" style="color:#94a3b8;"></small></div>
+      <button onclick="closeCweModal()" style="background:none;border:none;color:#94a3b8;font-size:1.5rem;cursor:pointer;">&times;</button>
+    </div>
+    <div id="mBody" style="padding:20px;"></div>
+  </div>
+</div>
 {% endblock %}

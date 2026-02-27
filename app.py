@@ -71,8 +71,14 @@ def calculate_risk_scores(analysis_data, total_runs):
         else:
             C = 1.0
         
+        # Round factors FIRST, then compute score from rounded values
+        # This ensures the displayed "Manual Verification" always matches
+        I = round(I, 2)
+        L = round(L, 2)
+        Vol = round(Vol, 2)
+        
         risk_score = V * I * L * Vol * C * 100
-        risk_score = min(risk_score, 100)
+        risk_score = round(min(risk_score, 100), 2)
         
         if risk_score >= 80:
             risk_level = 'CRITICAL'
@@ -91,13 +97,13 @@ def calculate_risk_scores(analysis_data, total_runs):
             risk_color = 'success'
         
         return {
-            'risk_score': round(risk_score, 2),
+            'risk_score': risk_score,
             'risk_level': risk_level,
             'risk_color': risk_color,
             'V': V,
-            'I': round(I, 2),
-            'L': round(L, 2),
-            'Vol': round(Vol, 2),
+            'I': I,
+            'L': L,
+            'Vol': Vol,
             'C': C,
             'tp_count': tp_count,
             'tp_file_count': tp_file_count,
