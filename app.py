@@ -132,10 +132,18 @@ def calculate_risk_scores(analysis_data, total_runs):
             # Use found_in_runs which tracks runs where this CWE appeared in this language
             runs = list(cwe_info.get('found_in_runs', []))
             tools = list(cwe_info.get('tools', []))
-            severities = list(cwe_info.get('severities', []))
+            # Use TP-only severities for scoring (not FP severities)
+            tp_severities = list(cwe_info.get('tp_severities', []))
+            # Fall back to all severities if tp_severities empty (shouldn't happen since tp_count > 0)
+            severities_for_scoring = tp_severities if tp_severities else list(cwe_info.get('severities', []))
+            # Keep all severities for display
+            all_severities = list(cwe_info.get('severities', []))
             
-            score = _compute_score(tp_count, fp_count, tp_files, runs, tools, severities, total_runs)
+            score = _compute_score(tp_count, fp_count, tp_files, runs, tools, severities_for_scoring, total_runs)
             if score:
+                # Store all severities for display alongside the TP-only ones used in scoring
+                score['severities'] = all_severities
+                score['tp_severities'] = tp_severities
                 lang_scores[cwe_id] = score
         
         if lang_scores:
@@ -158,6 +166,7 @@ def calculate_risk_scores(analysis_data, total_runs):
                 existing['_runs'] = list(set(existing['_runs']) | set(cwe_info.get('found_in_runs', [])))
                 existing['_tools'] = list(set(existing['_tools']) | set(cwe_info.get('tools', [])))
                 existing['_severities'] = list(set(existing['_severities']) | set(cwe_info.get('severities', [])))
+                existing['_tp_severities'] = list(set(existing['_tp_severities']) | set(cwe_info.get('tp_severities', [])))
             else:
                 global_cwes[cwe_id] = {
                     '_tp_count': tp_count,
@@ -165,16 +174,23 @@ def calculate_risk_scores(analysis_data, total_runs):
                     '_tp_files': list(cwe_info.get('true_positive_files', [])),
                     '_runs': list(cwe_info.get('found_in_runs', [])),
                     '_tools': list(cwe_info.get('tools', [])),
-                    '_severities': list(cwe_info.get('severities', []))
+                    '_severities': list(cwe_info.get('severities', [])),
+                    '_tp_severities': list(cwe_info.get('tp_severities', []))
                 }
     
     global_scores = {}
     for cwe_id, agg in global_cwes.items():
+        # Use TP-only severities for scoring
+        tp_sevs = agg['_tp_severities']
+        scoring_sevs = tp_sevs if tp_sevs else agg['_severities']
         score = _compute_score(
             agg['_tp_count'], agg['_fp_count'], agg['_tp_files'],
-            agg['_runs'], agg['_tools'], agg['_severities'], total_runs
+            agg['_runs'], agg['_tools'], scoring_sevs, total_runs
         )
         if score:
+            # Store both for display
+            score['severities'] = agg['_severities']
+            score['tp_severities'] = tp_sevs
             global_scores[cwe_id] = score
     
     return per_language_scores, global_scores
@@ -629,7 +645,8 @@ def analyze_json_by_language(json_data):
                         "total_files_affected": 0,
                         "affected_files": set(),  # Temporary set for unique files
                         "verdicts": {"true_positive": 0, "false_positive": 0, "unknown": 0},
-                        "severities": set(),
+                        "severities": set(),       # ALL severities (TP + FP) for display
+                        "tp_severities": set(),    # TP-only severities for scoring
                         "tools": set(),
                         "found_in_runs": set(),
                         "file_counts_per_run": {},
@@ -687,6 +704,8 @@ def analyze_json_by_language(json_data):
                 
                 cwe_entry["verdicts"][verdict] = cwe_entry["verdicts"].get(verdict, 0) + 1
                 cwe_entry["severities"].add(severity)
+                if verdict == "true_positive":
+                    cwe_entry["tp_severities"].add(severity)
                 cwe_entry["tools"].add(scanner)
                 cwe_entry["found_in_runs"].add(run_number)
                 
@@ -792,6 +811,7 @@ def analyze_json_by_language(json_data):
                     verdicts["unknown_details"] = sorted(unknown_list, key=lambda x: (x["run"], x["line"]))
             
             cwe_entry["severities"] = sorted(list(cwe_entry["severities"]))
+            cwe_entry["tp_severities"] = sorted(list(cwe_entry.get("tp_severities", set())))
             cwe_entry["tools"] = sorted(list(cwe_entry["tools"]))
             cwe_entry["found_in_runs"] = sorted(list(cwe_entry["found_in_runs"]))
             
@@ -2127,11 +2147,13 @@ def api_comparison_data():
         for cwe_id, score_data in sorted(risk_scores.items(), key=lambda x: x[1]['risk_score'], reverse=True):
             cwe_details.append({
                 'cwe_id': cwe_id,
+                'cwe_name': get_cwe_name(cwe_id),
                 'risk_score': score_data['risk_score'],
                 'risk_level': score_data['risk_level'],
                 'tp_count': score_data['tp_count'],
                 'runs_count': score_data['runs_count'],
-                'tools_count': score_data['tools_count']
+                'tools_count': score_data['tools_count'],
+                'severities': list(score_data.get('severities', [])),
             })
         
         # Data-derived metrics only (no constants)
