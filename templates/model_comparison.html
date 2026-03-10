@@ -158,7 +158,13 @@
     <div class="col-lg-4"><div class="card-panel">
       <div class="d-flex justify-content-between align-items-center mb-1">
         <div class="section-title mb-0">🥧 OWASP Distribution</div>
-        <select id="owaspPieModel" onchange="updateOwaspPie()" style="background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:6px;padding:2px 8px;font-size:0.75rem;max-width:180px;"></select>
+        <div class="d-flex gap-1">
+          <select id="owaspPieMetric" onchange="updateOwaspPie()" style="background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:6px;padding:2px 6px;font-size:0.72rem;">
+            <option value="count">By CWE Count</option>
+            <option value="risk">By Risk Score</option>
+          </select>
+          <select id="owaspPieModel" onchange="updateOwaspPie()" style="background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:6px;padding:2px 6px;font-size:0.72rem;max-width:150px;"></select>
+        </div>
       </div>
       <div class="chart-wrap" style="height:420px;"><canvas id="chartOwaspPie"></canvas></div>
     </div></div>
@@ -498,38 +504,42 @@ function drawOwasp(M){
 function updateOwaspPie(){
   destroyChart('chartOwaspPie');
   var d=window._owaspPieData;if(!d)return;
-  var sel=document.getElementById('owaspPieModel');
-  var val=sel.value;
+  var modelVal=document.getElementById('owaspPieModel').value;
+  var metric=document.getElementById('owaspPieMetric').value;
   var activeCats=d.activeCats,shortCats=d.shortCats,catColors=d.catColors;
 
   // Build buckets for selected scope
   var buckets={};
   activeCats.forEach(function(c){buckets[c]={risk:0,count:0};});
-  if(val==='all'){
-    // Use global
-    activeCats.forEach(function(c){buckets[c]=d.globalBuckets[c];});
+  if(modelVal==='all'){
+    activeCats.forEach(function(c){buckets[c]={risk:d.globalBuckets[c].risk,count:d.globalBuckets[c].count};});
   } else {
-    // Single model
-    var idx=parseInt(val),m=d.M[idx];
+    var idx=parseInt(modelVal),m=d.M[idx];
     (m.cwe_details||[]).forEach(function(dd){
       var o=dd.owasp||'Unmapped';
       if(buckets[o]){buckets[o].risk+=dd.risk_score;buckets[o].count++;}
     });
   }
 
-  // Filter to non-zero categories for this selection
-  var showCats=[],showLabels=[],showColors=[],showData=[],showCounts=[];
+  // Filter to non-zero categories
+  var showCats=[],showLabels=[],showColors=[],showData=[],showAlt=[];
   for(var i=0;i<activeCats.length;i++){
     var c=activeCats[i];
     if(buckets[c]&&buckets[c].count>0){
       showCats.push(c);showLabels.push(shortCats[i]);
       showColors.push(catColors[c]||'#475569');
-      showData.push(Math.round(buckets[c].risk*100)/100);
-      showCounts.push(buckets[c].count);
+      if(metric==='count'){
+        showData.push(buckets[c].count);
+        showAlt.push(Math.round(buckets[c].risk*100)/100);
+      } else {
+        showData.push(Math.round(buckets[c].risk*100)/100);
+        showAlt.push(buckets[c].count);
+      }
     }
   }
   if(!showData.length)return;
 
+  var isCount=metric==='count';
   charts['chartOwaspPie']=new Chart(document.getElementById('chartOwaspPie'),{
     type:'doughnut',
     data:{labels:showLabels,datasets:[{data:showData,backgroundColor:showColors,borderColor:'#0f172a',borderWidth:2}]},
@@ -538,7 +548,11 @@ function updateOwaspPie(){
         tooltip:{callbacks:{label:function(ctx){
           var cat=showCats[ctx.dataIndex],total=showData.reduce(function(a,b){return a+b;},0);
           var pct=total>0?Math.round(ctx.parsed/total*100):0;
-          return cat+': Σ'+ctx.parsed+' ('+showCounts[ctx.dataIndex]+' CWEs, '+pct+'%)';
+          if(isCount){
+            return cat+': '+ctx.parsed+' CWEs (Σ Risk: '+showAlt[ctx.dataIndex]+', '+pct+'%)';
+          } else {
+            return cat+': Σ'+ctx.parsed+' ('+showAlt[ctx.dataIndex]+' CWEs, '+pct+'%)';
+          }
         }}}}}
   });
 }
