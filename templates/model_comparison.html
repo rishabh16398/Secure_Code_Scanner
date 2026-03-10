@@ -149,6 +149,21 @@
     </div></div>
   </div>
 
+  <!-- Chart Row 4: OWASP Top 10 -->
+  <div class="row g-3">
+    <div class="col-lg-8"><div class="card-panel">
+      <div class="section-title">🛡️ OWASP Top 10 (2021) — Risk by Category <small style="color:#a1a1aa;font-weight:400;">— per model, weighted by Σ risk score</small></div>
+      <div class="chart-wrap" style="height:420px;"><canvas id="chartOwasp"></canvas></div>
+    </div></div>
+    <div class="col-lg-4"><div class="card-panel">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <div class="section-title mb-0">🥧 OWASP Distribution</div>
+        <select id="owaspPieModel" onchange="updateOwaspPie()" style="background:#1e293b;color:#e2e8f0;border:1px solid #334155;border-radius:6px;padding:2px 8px;font-size:0.75rem;max-width:180px;"></select>
+      </div>
+      <div class="chart-wrap" style="height:420px;"><canvas id="chartOwaspPie"></canvas></div>
+    </div></div>
+  </div>
+
   <!-- Per-Model Calculation Details -->
   <div class="card-panel">
     <div class="section-title">📝 Per-Model Metric Breakdown</div>
@@ -254,6 +269,7 @@ function render(){
   drawMulti(M);
   drawScatter(M);
   drawRadar(M);
+  drawOwasp(M);
   fillTable(M);
   fillCalcDetails(M);
   fillPercentiles(P);
@@ -401,6 +417,132 @@ function toggleCalc(i){
   el.style.display=(el.style.display==='none')?'block':'none';
 }
 
+// ── OWASP TOP 10 CHART ──────────────────────────────────────
+function drawOwasp(M){
+  destroyChart('chartOwasp');
+  destroyChart('chartOwaspPie');
+  var allCats=['A01 Broken Access Control','A02 Cryptographic Failures','A03 Injection','A04 Insecure Design','A05 Security Misconfiguration','A07 Auth Failures','A08 Integrity Failures','A09 Logging Failures','Unmapped'];
+  var catColors={'A01 Broken Access Control':'#ef4444','A02 Cryptographic Failures':'#f59e0b','A03 Injection':'#f97316','A04 Insecure Design':'#3b82f6','A05 Security Misconfiguration':'#8b5cf6','A07 Auth Failures':'#ec4899','A08 Integrity Failures':'#14b8a6','A09 Logging Failures':'#6366f1','Unmapped':'#475569'};
+  var modelColors=['#6366f1','#ef4444','#22c55e','#f59e0b','#ec4899','#14b8a6','#a855f7','#f97316','#06b6d4','#84cc16'];
+
+  // First pass: find which categories actually have data across all models
+  var globalBuckets={};
+  allCats.forEach(function(c){globalBuckets[c]={risk:0,count:0};});
+  var perModel=[];
+  for(var i=0;i<M.length;i++){
+    var m=M[i],buckets={};
+    allCats.forEach(function(c){buckets[c]={risk:0,count:0};});
+    (m.cwe_details||[]).forEach(function(d){
+      var o=d.owasp||'Unmapped';
+      if(!buckets[o]){buckets[o]={risk:0,count:0};}  // safety for unknown categories
+      buckets[o].risk+=d.risk_score; buckets[o].count++;
+      globalBuckets[o].risk+=d.risk_score; globalBuckets[o].count++;
+    });
+    perModel.push(buckets);
+  }
+
+  // Filter to only categories with actual data
+  var activeCats=allCats.filter(function(c){return globalBuckets[c].count>0;});
+  if(!activeCats.length) return;
+
+  // ── GROUPED BAR CHART ──────────────────────────────
+  var datasets=[];
+  for(var i=0;i<M.length;i++){
+    var bk=perModel[i];
+    datasets.push({
+      label:M[i].name.length>30?M[i].name.substring(0,27)+'...':M[i].name,
+      data:activeCats.map(function(c){return Math.round(bk[c].risk*100)/100;}),
+      backgroundColor:modelColors[i%modelColors.length]+'aa',
+      borderColor:modelColors[i%modelColors.length],
+      borderWidth:1.5,borderRadius:3
+    });
+  }
+  var shortCats=activeCats.map(function(c){
+    return c.replace('A01 Broken Access Control','A01 Access Ctrl')
+            .replace('A02 Cryptographic Failures','A02 Crypto')
+            .replace('A03 Injection','A03 Injection')
+            .replace('A04 Insecure Design','A04 Design')
+            .replace('A05 Security Misconfiguration','A05 Misconfig')
+            .replace('A07 Auth Failures','A07 Auth')
+            .replace('A08 Integrity Failures','A08 Integrity')
+            .replace('A09 Logging Failures','A09 Logging');
+  });
+  charts['chartOwasp']=new Chart(document.getElementById('chartOwasp'),{
+    type:'bar',
+    data:{labels:shortCats,datasets:datasets},
+    options:{responsive:true,maintainAspectRatio:false,animation:{duration:500},
+      plugins:{legend:{position:'top',labels:{color:'#a1a1aa',font:{size:10},boxWidth:12}},
+        tooltip:{callbacks:{title:function(items){return activeCats[items[0].dataIndex];},
+          label:function(ctx){var m=M[ctx.datasetIndex],cat=activeCats[ctx.dataIndex],cwes=[];
+            (m.cwe_details||[]).forEach(function(d){var o=d.owasp||'Unmapped';if(o===cat)cwes.push(d.cwe_id+': '+d.risk_score);});
+            return ctx.dataset.label+': Σ'+ctx.parsed.y+' ('+cwes.join(', ')+')';
+          }}}},
+      scales:{x:{grid:{color:'rgba(148,163,184,0.06)'},ticks:{color:'#a1a1aa',font:{size:9},maxRotation:45}},
+        y:{grid:{color:'rgba(148,163,184,0.08)'},ticks:{color:'#a1a1aa',font:{size:10}},title:{display:true,text:'Σ Risk Score',color:'#94a3b8',font:{size:11}}}}}
+  });
+
+  // ── PIE DROPDOWN + INITIAL RENDER ──────────────────
+  // Store data for pie updates
+  window._owaspPieData={M:M,activeCats:activeCats,shortCats:shortCats,catColors:catColors,perModel:perModel,globalBuckets:globalBuckets};
+  var sel=document.getElementById('owaspPieModel');
+  sel.innerHTML='<option value="all">All Models Combined</option>';
+  for(var i=0;i<M.length;i++){
+    var opt=document.createElement('option');
+    opt.value=i;
+    opt.textContent=M[i].name.length>35?M[i].name.substring(0,32)+'...':M[i].name;
+    sel.appendChild(opt);
+  }
+  updateOwaspPie();
+}
+
+function updateOwaspPie(){
+  destroyChart('chartOwaspPie');
+  var d=window._owaspPieData;if(!d)return;
+  var sel=document.getElementById('owaspPieModel');
+  var val=sel.value;
+  var activeCats=d.activeCats,shortCats=d.shortCats,catColors=d.catColors;
+
+  // Build buckets for selected scope
+  var buckets={};
+  activeCats.forEach(function(c){buckets[c]={risk:0,count:0};});
+  if(val==='all'){
+    // Use global
+    activeCats.forEach(function(c){buckets[c]=d.globalBuckets[c];});
+  } else {
+    // Single model
+    var idx=parseInt(val),m=d.M[idx];
+    (m.cwe_details||[]).forEach(function(dd){
+      var o=dd.owasp||'Unmapped';
+      if(buckets[o]){buckets[o].risk+=dd.risk_score;buckets[o].count++;}
+    });
+  }
+
+  // Filter to non-zero categories for this selection
+  var showCats=[],showLabels=[],showColors=[],showData=[],showCounts=[];
+  for(var i=0;i<activeCats.length;i++){
+    var c=activeCats[i];
+    if(buckets[c]&&buckets[c].count>0){
+      showCats.push(c);showLabels.push(shortCats[i]);
+      showColors.push(catColors[c]||'#475569');
+      showData.push(Math.round(buckets[c].risk*100)/100);
+      showCounts.push(buckets[c].count);
+    }
+  }
+  if(!showData.length)return;
+
+  charts['chartOwaspPie']=new Chart(document.getElementById('chartOwaspPie'),{
+    type:'doughnut',
+    data:{labels:showLabels,datasets:[{data:showData,backgroundColor:showColors,borderColor:'#0f172a',borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,animation:{duration:500},
+      plugins:{legend:{position:'bottom',labels:{color:'#a1a1aa',font:{size:9},boxWidth:10,padding:8}},
+        tooltip:{callbacks:{label:function(ctx){
+          var cat=showCats[ctx.dataIndex],total=showData.reduce(function(a,b){return a+b;},0);
+          var pct=total>0?Math.round(ctx.parsed/total*100):0;
+          return cat+': Σ'+ctx.parsed+' ('+showCounts[ctx.dataIndex]+' CWEs, '+pct+'%)';
+        }}}}}
+  });
+}
+
 // ── TABLE ────────────────────────────────────────────────────
 function fillTable(M){
   var tb=document.getElementById('tbl-body'); tb.innerHTML='';
@@ -485,12 +627,15 @@ function openCweModal(x){
   var h='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;">';
   h+=msc('CWEs',x.num_cwes,'#6366f1')+msc('Σ Risk',x.sum_risk,'#ef4444')+msc('Max',x.max_risk,'#f59e0b')+msc('Avg',x.avg_risk,'#22c55e');
   h+='</div><div style="max-height:400px;overflow-y:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.78rem;">';
-  h+='<thead><tr style="border-bottom:2px solid #334155;"><th style="padding:6px;color:#94a3b8;">CWE</th><th style="padding:6px;color:#94a3b8;text-align:center;">Score</th><th style="padding:6px;color:#94a3b8;">Level</th><th style="padding:6px;color:#94a3b8;">SAST Sev.</th><th style="padding:6px;color:#94a3b8;text-align:center;">TPs</th><th style="padding:6px;color:#94a3b8;text-align:center;">Runs</th><th style="padding:6px;color:#94a3b8;text-align:center;">Tools</th><th style="padding:6px;color:#94a3b8;">Bar</th></tr></thead><tbody>';
+  h+='<thead><tr style="border-bottom:2px solid #334155;"><th style="padding:6px;color:#94a3b8;">CWE</th><th style="padding:6px;color:#94a3b8;text-align:center;">Score</th><th style="padding:6px;color:#94a3b8;">Level</th><th style="padding:6px;color:#94a3b8;">OWASP</th><th style="padding:6px;color:#94a3b8;">SAST Sev.</th><th style="padding:6px;color:#94a3b8;text-align:center;">TPs</th><th style="padding:6px;color:#94a3b8;text-align:center;">Runs</th><th style="padding:6px;color:#94a3b8;text-align:center;">Tools</th><th style="padding:6px;color:#94a3b8;">Bar</th></tr></thead><tbody>';
   var sevCol={'CRITICAL':'#dc2626','HIGH':'#ef4444','ERROR':'#ef4444','MEDIUM':'#f59e0b','WARNING':'#f59e0b','LOW':'#3b82f6','INFO':'#64748b'};
+  var owaspCol={'A01':'#ef4444','A02':'#f59e0b','A03':'#f97316','A04':'#3b82f6','A05':'#8b5cf6','A07':'#ec4899','A08':'#14b8a6','A09':'#6366f1'};
   cw.forEach(function(c,i){var cl2=lc[c.risk_level]||'#94a3b8',bg=i%2?'background:rgba(30,41,59,0.4);':'';
     var sevHtml='';if(c.severities&&c.severities.length){c.severities.forEach(function(s){sevHtml+='<span style="color:'+(sevCol[s.toUpperCase()]||'#94a3b8')+';font-size:0.62rem;font-weight:600;padding:1px 5px;border:1px solid '+(sevCol[s.toUpperCase()]||'#94a3b8')+';border-radius:6px;margin-right:2px;">'+s+'</span>';});}else{sevHtml='<span style="color:#64748b;">-</span>';}
     var nameHtml=c.cwe_name?'<div style="color:#94a3b8;font-size:0.62rem;margin-top:1px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+(c.cwe_name||'')+'">'+c.cwe_name+'</div>':'';
-    h+='<tr style="border-bottom:1px solid #1e293b;'+bg+'"><td style="padding:6px;"><span style="color:#e2e8f0;font-weight:600;">'+c.cwe_id+'</span>'+nameHtml+'</td><td style="padding:6px;text-align:center;color:'+cl2+';font-weight:700;">'+c.risk_score+'</td><td style="padding:6px;"><span style="color:'+cl2+';font-size:0.65rem;font-weight:600;padding:2px 6px;border:1px solid '+cl2+';border-radius:8px;">'+c.risk_level+'</span></td><td style="padding:6px;">'+sevHtml+'</td><td style="padding:6px;text-align:center;">'+c.tp_count+'</td><td style="padding:6px;text-align:center;color:#94a3b8;">'+c.runs_count+'</td><td style="padding:6px;text-align:center;color:#94a3b8;">'+c.tools_count+'</td><td style="padding:6px;width:100px;"><div style="width:100%;background:#1e293b;border-radius:3px;height:12px;overflow:hidden;"><div style="width:'+Math.min(c.risk_score,100)+'%;height:100%;background:'+cl2+';border-radius:3px;"></div></div></td></tr>';});
+    var oTag=c.owasp||'Unmapped',oKey=oTag.substring(0,3),oCol=owaspCol[oKey]||'#64748b';
+    var owaspHtml='<span style="color:'+oCol+';font-size:0.6rem;font-weight:600;" title="'+oTag+'">'+oTag.replace(/ /g,'&nbsp;')+'</span>';
+    h+='<tr style="border-bottom:1px solid #1e293b;'+bg+'"><td style="padding:6px;"><span style="color:#e2e8f0;font-weight:600;">'+c.cwe_id+'</span>'+nameHtml+'</td><td style="padding:6px;text-align:center;color:'+cl2+';font-weight:700;">'+c.risk_score+'</td><td style="padding:6px;"><span style="color:'+cl2+';font-size:0.65rem;font-weight:600;padding:2px 6px;border:1px solid '+cl2+';border-radius:8px;">'+c.risk_level+'</span></td><td style="padding:6px;">'+owaspHtml+'</td><td style="padding:6px;">'+sevHtml+'</td><td style="padding:6px;text-align:center;">'+c.tp_count+'</td><td style="padding:6px;text-align:center;color:#94a3b8;">'+c.runs_count+'</td><td style="padding:6px;text-align:center;color:#94a3b8;">'+c.tools_count+'</td><td style="padding:6px;width:100px;"><div style="width:100%;background:#1e293b;border-radius:3px;height:12px;overflow:hidden;"><div style="width:'+Math.min(c.risk_score,100)+'%;height:100%;background:'+cl2+';border-radius:3px;"></div></div></td></tr>';});
   h+='</tbody></table></div>';
   document.getElementById('mBody').innerHTML=h;
   document.getElementById('cweModal').style.display='block';document.body.style.overflow='hidden';

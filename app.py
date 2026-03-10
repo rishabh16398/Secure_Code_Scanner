@@ -2148,6 +2148,7 @@ def api_comparison_data():
             cwe_details.append({
                 'cwe_id': cwe_id,
                 'cwe_name': get_cwe_name(cwe_id),
+                'owasp': get_owasp_category(cwe_id),
                 'risk_score': score_data['risk_score'],
                 'risk_level': score_data['risk_level'],
                 'tp_count': score_data['tp_count'],
@@ -2779,6 +2780,240 @@ def get_cwe_name(cwe: str) -> str:
         "CWE-410": "Insufficient Resource Pool",
     }
     return cwe_names.get(cwe, f"Unknown Vulnerability ({cwe})")
+
+
+def get_owasp_category(cwe: str) -> str:
+    """Map a CWE to its OWASP Top 10 2021 category.
+    Based on official MITRE CWE View 1344 + Mend.io extended mapping.
+    Returns short label like 'A01 Broken Access Control' or 'Unmapped' if no match.
+    """
+    # Comprehensive CWE → OWASP Top 10 2021 mapping
+    # Source: https://cwe.mitre.org/data/definitions/1344.html
+    #         https://docs.mend.io/platform/latest/owasp-top-10-cwe-coverage
+    OWASP_MAP = {
+        # A01:2021 - Broken Access Control
+        "CWE-22":  "A01 Broken Access Control",
+        "CWE-23":  "A01 Broken Access Control",
+        "CWE-35":  "A01 Broken Access Control",
+        "CWE-36":  "A01 Broken Access Control",
+        "CWE-59":  "A01 Broken Access Control",
+        "CWE-200": "A01 Broken Access Control",
+        "CWE-201": "A01 Broken Access Control",
+        "CWE-219": "A01 Broken Access Control",
+        "CWE-250": "A01 Broken Access Control",
+        "CWE-264": "A01 Broken Access Control",
+        "CWE-269": "A01 Broken Access Control",
+        "CWE-275": "A01 Broken Access Control",
+        "CWE-276": "A01 Broken Access Control",
+        "CWE-284": "A01 Broken Access Control",
+        "CWE-285": "A01 Broken Access Control",
+        "CWE-352": "A01 Broken Access Control",
+        "CWE-359": "A01 Broken Access Control",
+        "CWE-377": "A01 Broken Access Control",
+        "CWE-402": "A01 Broken Access Control",
+        "CWE-425": "A01 Broken Access Control",
+        "CWE-441": "A01 Broken Access Control",
+        "CWE-497": "A01 Broken Access Control",
+        "CWE-538": "A01 Broken Access Control",
+        "CWE-540": "A01 Broken Access Control",
+        "CWE-548": "A01 Broken Access Control",
+        "CWE-552": "A01 Broken Access Control",
+        "CWE-566": "A01 Broken Access Control",
+        "CWE-601": "A01 Broken Access Control",
+        "CWE-639": "A01 Broken Access Control",
+        "CWE-651": "A01 Broken Access Control",
+        "CWE-668": "A01 Broken Access Control",
+        "CWE-706": "A01 Broken Access Control",
+        "CWE-732": "A01 Broken Access Control",
+        "CWE-862": "A01 Broken Access Control",
+        "CWE-863": "A01 Broken Access Control",
+        "CWE-913": "A01 Broken Access Control",
+        "CWE-918": "A01 Broken Access Control",  # also A10 SSRF
+        "CWE-1188": "A01 Broken Access Control",
+
+        # A02:2021 - Cryptographic Failures
+        "CWE-257": "A02 Cryptographic Failures",
+        "CWE-259": "A02 Cryptographic Failures",
+        "CWE-295": "A02 Cryptographic Failures",
+        "CWE-296": "A02 Cryptographic Failures",
+        "CWE-297": "A02 Cryptographic Failures",
+        "CWE-298": "A02 Cryptographic Failures",
+        "CWE-299": "A02 Cryptographic Failures",
+        "CWE-311": "A02 Cryptographic Failures",
+        "CWE-312": "A02 Cryptographic Failures",
+        "CWE-313": "A02 Cryptographic Failures",
+        "CWE-314": "A02 Cryptographic Failures",
+        "CWE-315": "A02 Cryptographic Failures",
+        "CWE-316": "A02 Cryptographic Failures",
+        "CWE-317": "A02 Cryptographic Failures",
+        "CWE-318": "A02 Cryptographic Failures",
+        "CWE-319": "A02 Cryptographic Failures",
+        "CWE-321": "A02 Cryptographic Failures",
+        "CWE-322": "A02 Cryptographic Failures",
+        "CWE-323": "A02 Cryptographic Failures",
+        "CWE-324": "A02 Cryptographic Failures",
+        "CWE-325": "A02 Cryptographic Failures",
+        "CWE-326": "A02 Cryptographic Failures",
+        "CWE-327": "A02 Cryptographic Failures",
+        "CWE-328": "A02 Cryptographic Failures",
+        "CWE-329": "A02 Cryptographic Failures",
+        "CWE-330": "A02 Cryptographic Failures",
+        "CWE-331": "A02 Cryptographic Failures",
+        "CWE-335": "A02 Cryptographic Failures",
+        "CWE-336": "A02 Cryptographic Failures",
+        "CWE-337": "A02 Cryptographic Failures",
+        "CWE-338": "A02 Cryptographic Failures",
+        "CWE-347": "A02 Cryptographic Failures",
+        "CWE-353": "A02 Cryptographic Failures",
+        "CWE-780": "A02 Cryptographic Failures",
+        "CWE-798": "A02 Cryptographic Failures",
+        "CWE-916": "A02 Cryptographic Failures",
+
+        # A03:2021 - Injection
+        "CWE-20":  "A03 Injection",
+        "CWE-74":  "A03 Injection",
+        "CWE-75":  "A03 Injection",
+        "CWE-77":  "A03 Injection",
+        "CWE-78":  "A03 Injection",
+        "CWE-79":  "A03 Injection",
+        "CWE-89":  "A03 Injection",
+        "CWE-90":  "A03 Injection",
+        "CWE-91":  "A03 Injection",
+        "CWE-94":  "A03 Injection",
+        "CWE-95":  "A03 Injection",
+        "CWE-96":  "A03 Injection",
+        "CWE-97":  "A03 Injection",
+        "CWE-98":  "A03 Injection",
+        "CWE-113": "A03 Injection",
+        "CWE-117": "A03 Injection",
+        "CWE-134": "A03 Injection",
+        "CWE-470": "A03 Injection",
+        "CWE-643": "A03 Injection",
+        "CWE-917": "A03 Injection",
+        "CWE-943": "A03 Injection",
+        "CWE-1321": "A03 Injection",
+        "CWE-1336": "A03 Injection",
+
+        # A04:2021 - Insecure Design
+        "CWE-73":  "A04 Insecure Design",
+        "CWE-183": "A04 Insecure Design",
+        "CWE-209": "A04 Insecure Design",
+        "CWE-213": "A04 Insecure Design",
+        "CWE-256": "A04 Insecure Design",
+        "CWE-434": "A04 Insecure Design",
+        "CWE-472": "A04 Insecure Design",
+        "CWE-501": "A04 Insecure Design",
+        "CWE-522": "A04 Insecure Design",
+        "CWE-598": "A04 Insecure Design",
+        "CWE-602": "A04 Insecure Design",
+        "CWE-620": "A04 Insecure Design",
+        "CWE-656": "A04 Insecure Design",
+        "CWE-676": "A04 Insecure Design",
+        "CWE-799": "A04 Insecure Design",
+        "CWE-840": "A04 Insecure Design",
+
+        # A05:2021 - Security Misconfiguration
+        "CWE-2":   "A05 Security Misconfiguration",
+        "CWE-11":  "A05 Security Misconfiguration",
+        "CWE-13":  "A05 Security Misconfiguration",
+        "CWE-15":  "A05 Security Misconfiguration",
+        "CWE-16":  "A05 Security Misconfiguration",
+        "CWE-215": "A05 Security Misconfiguration",
+        "CWE-260": "A05 Security Misconfiguration",
+        "CWE-315": "A05 Security Misconfiguration",
+        "CWE-489": "A05 Security Misconfiguration",
+        "CWE-521": "A05 Security Misconfiguration",
+        "CWE-525": "A05 Security Misconfiguration",
+        "CWE-611": "A05 Security Misconfiguration",
+        "CWE-614": "A05 Security Misconfiguration",
+        "CWE-776": "A05 Security Misconfiguration",
+        "CWE-827": "A05 Security Misconfiguration",
+        "CWE-942": "A05 Security Misconfiguration",
+        "CWE-1004": "A05 Security Misconfiguration",
+
+        # A06:2021 - Vulnerable and Outdated Components
+        # (no specific CWEs — dependency-level issue)
+
+        # A07:2021 - Identification and Authentication Failures
+        "CWE-287": "A07 Auth Failures",
+        "CWE-306": "A07 Auth Failures",
+        "CWE-346": "A07 Auth Failures",
+        "CWE-384": "A07 Auth Failures",
+        "CWE-521": "A07 Auth Failures",
+        "CWE-613": "A07 Auth Failures",
+        "CWE-620": "A07 Auth Failures",
+        "CWE-640": "A07 Auth Failures",
+        "CWE-941": "A07 Auth Failures",
+
+        # A08:2021 - Software and Data Integrity Failures
+        "CWE-345": "A08 Integrity Failures",
+        "CWE-426": "A08 Integrity Failures",
+        "CWE-427": "A08 Integrity Failures",
+        "CWE-502": "A08 Integrity Failures",
+        "CWE-565": "A08 Integrity Failures",
+        "CWE-784": "A08 Integrity Failures",
+        "CWE-829": "A08 Integrity Failures",
+        "CWE-830": "A08 Integrity Failures",
+        "CWE-915": "A08 Integrity Failures",
+
+        # A09:2021 - Security Logging and Monitoring Failures
+        "CWE-117": "A09 Logging Failures",
+        "CWE-223": "A09 Logging Failures",
+        "CWE-532": "A09 Logging Failures",
+        "CWE-533": "A09 Logging Failures",
+        "CWE-778": "A09 Logging Failures",
+
+        # A10:2021 - Server-Side Request Forgery (SSRF)
+        # CWE-918 also mapped under A01
+
+        # Memory safety (common in C/C++, not directly OWASP-mapped)
+        "CWE-119": "A04 Insecure Design",
+        "CWE-120": "A04 Insecure Design",
+        "CWE-121": "A04 Insecure Design",
+        "CWE-122": "A04 Insecure Design",
+        "CWE-125": "A04 Insecure Design",
+        "CWE-190": "A04 Insecure Design",
+        "CWE-191": "A04 Insecure Design",
+        "CWE-369": "A04 Insecure Design",
+        "CWE-415": "A04 Insecure Design",
+        "CWE-416": "A04 Insecure Design",
+        "CWE-476": "A04 Insecure Design",
+        "CWE-787": "A04 Insecure Design",
+
+        # Resource management
+        "CWE-362": "A04 Insecure Design",
+        "CWE-364": "A04 Insecure Design",
+        "CWE-367": "A04 Insecure Design",
+        "CWE-400": "A04 Insecure Design",
+        "CWE-401": "A04 Insecure Design",
+        "CWE-404": "A04 Insecure Design",
+        "CWE-409": "A04 Insecure Design",
+        "CWE-410": "A04 Insecure Design",
+        "CWE-770": "A04 Insecure Design",
+        "CWE-771": "A04 Insecure Design",
+        "CWE-772": "A04 Insecure Design",
+        "CWE-775": "A04 Insecure Design",
+        "CWE-834": "A04 Insecure Design",
+        "CWE-1333": "A04 Insecure Design",
+
+        # Code quality
+        "CWE-158": "A04 Insecure Design",
+        "CWE-477": "A04 Insecure Design",
+        "CWE-478": "A04 Insecure Design",
+        "CWE-479": "A04 Insecure Design",
+        "CWE-480": "A04 Insecure Design",
+        "CWE-483": "A04 Insecure Design",
+        "CWE-484": "A04 Insecure Design",
+        "CWE-561": "A04 Insecure Design",
+        "CWE-570": "A04 Insecure Design",
+        "CWE-571": "A04 Insecure Design",
+        "CWE-670": "A04 Insecure Design",
+        "CWE-680": "A04 Insecure Design",
+        "CWE-681": "A04 Insecure Design",
+        "CWE-682": "A04 Insecure Design",
+        "CWE-911": "A04 Insecure Design",
+    }
+    return OWASP_MAP.get(cwe, "Unmapped")
 
 
 @app.route("/download_consolidated_json")
