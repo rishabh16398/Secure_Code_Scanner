@@ -152,7 +152,7 @@
   <!-- Chart Row 4: OWASP Top 10 -->
   <div class="row g-3">
     <div class="col-lg-8"><div class="card-panel">
-      <div class="section-title">🛡️ OWASP Top 10 (2021) — Risk by Category <small style="color:#a1a1aa;font-weight:400;">— per model, weighted by Σ risk score</small></div>
+      <div class="section-title">🛡️ OWASP Top 10 (2025) — Risk by Category <small style="color:#a1a1aa;font-weight:400;">— per model, weighted by Σ risk score</small></div>
       <div class="chart-wrap" style="height:420px;"><canvas id="chartOwasp"></canvas></div>
     </div></div>
     <div class="col-lg-4"><div class="card-panel">
@@ -427,8 +427,8 @@ function toggleCalc(i){
 function drawOwasp(M){
   destroyChart('chartOwasp');
   destroyChart('chartOwaspPie');
-  var allCats=['A01 Broken Access Control','A02 Cryptographic Failures','A03 Injection','A04 Insecure Design','A05 Security Misconfiguration','A07 Auth Failures','A08 Integrity Failures','A09 Logging Failures','Unmapped'];
-  var catColors={'A01 Broken Access Control':'#ef4444','A02 Cryptographic Failures':'#f59e0b','A03 Injection':'#f97316','A04 Insecure Design':'#3b82f6','A05 Security Misconfiguration':'#8b5cf6','A07 Auth Failures':'#ec4899','A08 Integrity Failures':'#14b8a6','A09 Logging Failures':'#6366f1','Unmapped':'#475569'};
+  var allCats=['A01 Broken Access Control','A02 Security Misconfig','A03 Supply Chain','A04 Crypto Failures','A05 Injection','A06 Insecure Design','A07 Auth Failures','A08 Integrity Failures','A09 Logging Failures','A10 Exception Handling','Unmapped'];
+  var catColors={'A01 Broken Access Control':'#ef4444','A02 Security Misconfig':'#f59e0b','A03 Supply Chain':'#84cc16','A04 Crypto Failures':'#f97316','A05 Injection':'#ec4899','A06 Insecure Design':'#3b82f6','A07 Auth Failures':'#a855f7','A08 Integrity Failures':'#14b8a6','A09 Logging Failures':'#6366f1','A10 Exception Handling':'#06b6d4','Unmapped':'#475569'};
   var modelColors=['#6366f1','#ef4444','#22c55e','#f59e0b','#ec4899','#14b8a6','#a855f7','#f97316','#06b6d4','#84cc16'];
 
   // First pass: find which categories actually have data across all models
@@ -465,13 +465,15 @@ function drawOwasp(M){
   }
   var shortCats=activeCats.map(function(c){
     return c.replace('A01 Broken Access Control','A01 Access Ctrl')
-            .replace('A02 Cryptographic Failures','A02 Crypto')
-            .replace('A03 Injection','A03 Injection')
-            .replace('A04 Insecure Design','A04 Design')
-            .replace('A05 Security Misconfiguration','A05 Misconfig')
+            .replace('A02 Security Misconfig','A02 Misconfig')
+            .replace('A03 Supply Chain','A03 Supply Chain')
+            .replace('A04 Crypto Failures','A04 Crypto')
+            .replace('A05 Injection','A05 Injection')
+            .replace('A06 Insecure Design','A06 Design')
             .replace('A07 Auth Failures','A07 Auth')
             .replace('A08 Integrity Failures','A08 Integrity')
-            .replace('A09 Logging Failures','A09 Logging');
+            .replace('A09 Logging Failures','A09 Logging')
+            .replace('A10 Exception Handling','A10 Exceptions');
   });
   charts['chartOwasp']=new Chart(document.getElementById('chartOwasp'),{
     type:'bar',
@@ -643,7 +645,7 @@ function openCweModal(x){
   h+='</div><div style="max-height:400px;overflow-y:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.78rem;">';
   h+='<thead><tr style="border-bottom:2px solid #334155;"><th style="padding:6px;color:#94a3b8;">CWE</th><th style="padding:6px;color:#94a3b8;text-align:center;">Score</th><th style="padding:6px;color:#94a3b8;">Level</th><th style="padding:6px;color:#94a3b8;">OWASP</th><th style="padding:6px;color:#94a3b8;">SAST Sev.</th><th style="padding:6px;color:#94a3b8;text-align:center;">TPs</th><th style="padding:6px;color:#94a3b8;text-align:center;">Runs</th><th style="padding:6px;color:#94a3b8;text-align:center;">Tools</th><th style="padding:6px;color:#94a3b8;">Bar</th></tr></thead><tbody>';
   var sevCol={'CRITICAL':'#dc2626','HIGH':'#ef4444','ERROR':'#ef4444','MEDIUM':'#f59e0b','WARNING':'#f59e0b','LOW':'#3b82f6','INFO':'#64748b'};
-  var owaspCol={'A01':'#ef4444','A02':'#f59e0b','A03':'#f97316','A04':'#3b82f6','A05':'#8b5cf6','A07':'#ec4899','A08':'#14b8a6','A09':'#6366f1'};
+  var owaspCol={'A01':'#ef4444','A02':'#f59e0b','A03':'#84cc16','A04':'#f97316','A05':'#ec4899','A06':'#3b82f6','A07':'#a855f7','A08':'#14b8a6','A09':'#6366f1','A10':'#06b6d4'};
   cw.forEach(function(c,i){var cl2=lc[c.risk_level]||'#94a3b8',bg=i%2?'background:rgba(30,41,59,0.4);':'';
     var sevHtml='';if(c.severities&&c.severities.length){c.severities.forEach(function(s){sevHtml+='<span style="color:'+(sevCol[s.toUpperCase()]||'#94a3b8')+';font-size:0.62rem;font-weight:600;padding:1px 5px;border:1px solid '+(sevCol[s.toUpperCase()]||'#94a3b8')+';border-radius:6px;margin-right:2px;">'+s+'</span>';});}else{sevHtml='<span style="color:#64748b;">-</span>';}
     var nameHtml=c.cwe_name?'<div style="color:#94a3b8;font-size:0.62rem;margin-top:1px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+(c.cwe_name||'')+'">'+c.cwe_name+'</div>':'';

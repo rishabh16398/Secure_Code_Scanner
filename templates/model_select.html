@@ -84,6 +84,9 @@
         <a href="{{ url_for('index') }}" class="btn btn-outline-light btn-sm">
           ➕ Upload More Models
         </a>
+        <button onclick="deleteAllModels()" class="btn btn-outline-danger btn-sm">
+          🗑️ Remove All
+        </button>
       </div>
     </div>
   </div>
@@ -157,6 +160,20 @@ function deleteModel(name) {
   };
   xhr.onerror = function() { alert('Network error'); };
   xhr.send(form);
+}
+function deleteAllModels() {
+  if (!confirm('Remove ALL ' + {{ models|length }} + ' loaded models?\n\nThis cannot be undone — you would need to re-upload all ZIPs.')) return;
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/api/delete_all_models');
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      window.location.href = '{{ url_for("index") }}';
+    } else {
+      alert('Failed: ' + xhr.responseText);
+    }
+  };
+  xhr.onerror = function() { alert('Network error'); };
+  xhr.send();
 }
 </script>
 {% endblock %}
