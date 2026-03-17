@@ -524,7 +524,7 @@ function updateOwaspPie(){
   }
 
   // Filter to non-zero categories
-  var showCats=[],showLabels=[],showColors=[],showData=[],showAlt=[];
+  var showCats=[],showLabels=[],showColors=[],showData=[],showAlt=[],showCweList=[];
   for(var i=0;i<activeCats.length;i++){
     var c=activeCats[i];
     if(buckets[c]&&buckets[c].count>0){
@@ -537,6 +537,24 @@ function updateOwaspPie(){
         showData.push(Math.round(buckets[c].risk*100)/100);
         showAlt.push(buckets[c].count);
       }
+      // Collect CWE details for this category
+      var cwes=[];
+      var models=modelVal==='all'?d.M:[d.M[parseInt(modelVal)]];
+      models.forEach(function(m){
+        (m.cwe_details||[]).forEach(function(dd){
+          var o=dd.owasp||'Unmapped';
+          if(o===c){
+            // Avoid duplicates across models for "all" mode
+            if(!cwes.some(function(x){return x.cwe_id===dd.cwe_id&&x._model===m.name;})){
+              cwes.push({cwe_id:dd.cwe_id,cwe_name:dd.cwe_name||'',risk_score:dd.risk_score,
+                risk_level:dd.risk_level,tp_count:dd.tp_count,severities:dd.severities||[],
+                _model:m.name});
+            }
+          }
+        });
+      });
+      cwes.sort(function(a,b){return b.risk_score-a.risk_score;});
+      showCweList.push(cwes);
     }
   }
   if(!showData.length)return;
@@ -555,8 +573,49 @@ function updateOwaspPie(){
           } else {
             return cat+': Σ'+ctx.parsed+' ('+showAlt[ctx.dataIndex]+' CWEs, '+pct+'%)';
           }
-        }}}}}
+        }}}},
+      onClick:function(e,el){
+        if(el.length){
+          var idx=el[0].index;
+          openOwaspSliceModal(showCats[idx],showCweList[idx],showColors[idx],showData[idx],showAlt[idx],isCount);
+        }
+      }}
   });
+}
+
+function openOwaspSliceModal(cat,cwes,color,mainVal,altVal,isCount){
+  document.getElementById('mTitle').textContent='🛡️ '+cat;
+  var sub=isCount?mainVal+' CWEs | Σ Risk: '+altVal:'Σ Risk: '+mainVal+' | '+altVal+' CWEs';
+  document.getElementById('mSub').textContent=sub;
+  if(!cwes.length){document.getElementById('mBody').innerHTML='<p style="color:#94a3b8;">No CWEs in this category.</p>';document.getElementById('cweModal').style.display='block';document.body.style.overflow='hidden';return;}
+
+  var totalRisk=0;cwes.forEach(function(c){totalRisk+=c.risk_score;});
+  var lc={'CRITICAL':'#dc2626','HIGH':'#ef4444','MEDIUM':'#f59e0b','LOW':'#3b82f6','MINIMAL':'#22c55e'};
+  var sevCol={'CRITICAL':'#dc2626','HIGH':'#ef4444','ERROR':'#ef4444','MEDIUM':'#f59e0b','WARNING':'#f59e0b','LOW':'#3b82f6','INFO':'#64748b'};
+  var showModel=cwes.length>0&&cwes[0]._model&&document.getElementById('owaspPieModel').value==='all';
+
+  var h='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">';
+  h+=msc('CWEs',cwes.length,color)+msc('Σ Risk',Math.round(totalRisk*100)/100,'#ef4444')+msc('Avg',cwes.length?Math.round(totalRisk/cwes.length*100)/100:0,'#22c55e');
+  h+='</div><div style="max-height:400px;overflow-y:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.78rem;">';
+  h+='<thead><tr style="border-bottom:2px solid #334155;">';
+  if(showModel) h+='<th style="padding:6px;color:#94a3b8;">Model</th>';
+  h+='<th style="padding:6px;color:#94a3b8;">CWE</th><th style="padding:6px;color:#94a3b8;text-align:center;">Score</th><th style="padding:6px;color:#94a3b8;">Level</th><th style="padding:6px;color:#94a3b8;">SAST Sev.</th><th style="padding:6px;color:#94a3b8;text-align:center;">TPs</th><th style="padding:6px;color:#94a3b8;">Bar</th></tr></thead><tbody>';
+  cwes.forEach(function(c,i){
+    var cl2=lc[c.risk_level]||'#94a3b8',bg=i%2?'background:rgba(30,41,59,0.4);':'';
+    var sevHtml='';if(c.severities&&c.severities.length){c.severities.forEach(function(s){sevHtml+='<span style="color:'+(sevCol[s.toUpperCase()]||'#94a3b8')+';font-size:0.62rem;font-weight:600;padding:1px 5px;border:1px solid '+(sevCol[s.toUpperCase()]||'#94a3b8')+';border-radius:6px;margin-right:2px;">'+s+'</span>';});}else{sevHtml='-';}
+    h+='<tr style="border-bottom:1px solid #1e293b;'+bg+'">';
+    if(showModel) h+='<td style="padding:6px;color:#94a3b8;font-size:0.68rem;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+c._model+'">'+c._model+'</td>';
+    h+='<td style="padding:6px;"><span style="color:#e2e8f0;font-weight:600;">'+c.cwe_id+'</span>';
+    if(c.cwe_name) h+='<div style="color:#94a3b8;font-size:0.6rem;margin-top:1px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+c.cwe_name+'">'+c.cwe_name+'</div>';
+    h+='</td><td style="padding:6px;text-align:center;color:'+cl2+';font-weight:700;">'+c.risk_score+'</td>';
+    h+='<td style="padding:6px;"><span style="color:'+cl2+';font-size:0.65rem;font-weight:600;padding:2px 6px;border:1px solid '+cl2+';border-radius:8px;">'+c.risk_level+'</span></td>';
+    h+='<td style="padding:6px;">'+sevHtml+'</td>';
+    h+='<td style="padding:6px;text-align:center;">'+c.tp_count+'</td>';
+    h+='<td style="padding:6px;width:80px;"><div style="width:100%;background:#1e293b;border-radius:3px;height:12px;overflow:hidden;"><div style="width:'+Math.min(c.risk_score,100)+'%;height:100%;background:'+cl2+';border-radius:3px;"></div></div></td></tr>';
+  });
+  h+='</tbody></table></div>';
+  document.getElementById('mBody').innerHTML=h;
+  document.getElementById('cweModal').style.display='block';document.body.style.overflow='hidden';
 }
 
 // ── TABLE ────────────────────────────────────────────────────
